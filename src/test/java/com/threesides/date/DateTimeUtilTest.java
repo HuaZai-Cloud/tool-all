@@ -9,6 +9,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
+import java.util.Scanner;
 
 
 /**
@@ -774,6 +776,30 @@ public class DateTimeUtilTest {
 		String formatDate = DateTimeUtil.format(date, DatePattern.DATE_MIDDLE_LINE_TIME_COLON_PATTERN);
 		Assert.assertEquals("2022-10-16 00:00:00",formatDate);
 	}
+
+	@Test
+	public void test() {
+
+
+		int[] a = new int[5];
+		Scanner rs = new Scanner(System.in);
+		Random b = new Random(10);
+		for (int i = 0; i < 5; i++) {
+			System.out.println("请输入0-10之间的数字");
+			int w = rs.nextInt();
+			a[i] = w;
+		}
+		int sum = 0;
+		for (int i = 0; i < 5; i++) {
+			int c = b.nextInt();
+			if (a[i] == c) {
+				sum += 1;
+				System.out.println("元素" + a[i] + "在数组中出现" + sum + "次");
+			}
+		}
+	}
+
+
 
 
 }
