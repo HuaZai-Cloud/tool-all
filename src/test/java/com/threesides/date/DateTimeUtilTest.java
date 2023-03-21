@@ -7,10 +7,7 @@ import org.junit.Test;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 
 /**
@@ -777,29 +774,114 @@ public class DateTimeUtilTest {
 		Assert.assertEquals("2022-10-16 00:00:00",formatDate);
 	}
 
+
 	@Test
-	public void test() {
+	public void testGetDateTime1() {
 
+		long millisecondTimestamp = 1679369400000L;
+		Date date = DateTimeUtil.getDateTime(millisecondTimestamp);
+		String formatDate = DateTimeUtil.format(date, DatePattern.DATE_MIDDLE_LINE_TIME_COLON_PATTERN);
+		Assert.assertEquals("2023-03-21 11:30:00",formatDate);
 
-		int[] a = new int[5];
-		Scanner rs = new Scanner(System.in);
-		Random b = new Random(10);
-		for (int i = 0; i < 5; i++) {
-			System.out.println("请输入0-10之间的数字");
-			int w = rs.nextInt();
-			a[i] = w;
-		}
-		int sum = 0;
-		for (int i = 0; i < 5; i++) {
-			int c = b.nextInt();
-			if (a[i] == c) {
-				sum += 1;
-				System.out.println("元素" + a[i] + "在数组中出现" + sum + "次");
-			}
-		}
 	}
 
+	@Test
+	public void testGetDateTime2() {
 
+		int secondTimestamp = 1679367600;
+		Date date = DateTimeUtil.getDateTime(secondTimestamp);
+		String formatDate = DateTimeUtil.format(date, DatePattern.DATE_MIDDLE_LINE_TIME_COLON_PATTERN);
+		Assert.assertEquals("2023-03-21 11:00:00",formatDate);
 
+	}
 
+	@Test
+	public void getCalendar() {
+
+		long millisecondTimestamp = 1679369400000L;
+		Calendar calendar = DateTimeUtil.getCalendar(millisecondTimestamp);
+		Date date = calendar.getTime();
+		String formatDate = DateTimeUtil.format(date, DatePattern.DATE_MIDDLE_LINE_TIME_COLON_PATTERN);
+		Assert.assertEquals("2023-03-21 11:30:00",formatDate);
+
+	}
+
+	@Test
+	public void testGetCalendar() {
+		int secondTimestamp = 1679367600;
+		Calendar calendar = DateTimeUtil.getCalendar(secondTimestamp);
+		Date date = calendar.getTime();
+		String formatDate = DateTimeUtil.format(date, DatePattern.DATE_MIDDLE_LINE_TIME_COLON_PATTERN);
+		Assert.assertEquals("2023-03-21 11:00:00",formatDate);
+	}
+
+	@Test
+	public void testGetCalendar1() {
+		Calendar calendar = DateTimeUtil.getCalendar();
+		Assert.assertNotNull(calendar);
+	}
+
+	@Test
+	public void testGetCalendar2() {
+		String startStrDate = "2023-02-16";
+		Date startDate = DateTimeUtil.parse(startStrDate, DatePattern.DATE_MIDDLE_LINE_PATTERN);
+		Calendar calendar = DateTimeUtil.getCalendar(startDate);
+		Date date = calendar.getTime();
+		String formatDate = DateTimeUtil.format(date, DatePattern.DATE_MIDDLE_LINE_TIME_COLON_PATTERN);
+		Assert.assertEquals("2023-02-16 00:00:00",formatDate);
+	}
+
+	@Test
+	public void getMillisecondTimestamp() {
+		Long millisecondTimestamp = DateTimeUtil.getMillisecondTimestamp();
+		Assert.assertNotNull(millisecondTimestamp);
+
+	}
+
+	@Test
+	public void testGetMillisecondTimestamp() {
+		String startStrDate = "2023-03-21 11:30:00";
+		Date startDate = DateTimeUtil.parse(startStrDate, DatePattern.DATE_MIDDLE_LINE_TIME_COLON_PATTERN);
+		Long millisecondTimestamp = DateTimeUtil.getMillisecondTimestamp(startDate);
+		Long assertLong = 1679369400000L;
+		Assert.assertEquals(assertLong,millisecondTimestamp);
+	}
+
+	@Test
+	public void testGetMillisecondTimestamp1() {
+		String startStrDate = "2023-03-21 11:30:00";
+		Date startDate = DateTimeUtil.parse(startStrDate, DatePattern.DATE_MIDDLE_LINE_TIME_COLON_PATTERN);
+		Calendar calendar = DateTimeUtil.getCalendar(startDate);
+		Long millisecondTimestamp = DateTimeUtil.getMillisecondTimestamp(calendar);
+		Long assertLong = 1679369400000L;
+		Assert.assertEquals(assertLong,millisecondTimestamp);
+	}
+
+	@Test
+	public void getSecondTimestamp() {
+		Integer secondTimestamp = DateTimeUtil.getSecondTimestamp();
+		Assert.assertNotNull(secondTimestamp);
+
+	}
+
+	@Test
+	public void testGetSecondTimestamp() {
+
+		String startStrDate = "2023-03-21 11:00:00";
+		Date startDate = DateTimeUtil.parse(startStrDate, DatePattern.DATE_MIDDLE_LINE_TIME_COLON_PATTERN);
+		Integer secondTimestamp = DateTimeUtil.getSecondTimestamp(startDate);
+		int assertSecondTimestamp = 1679367600;
+		Assert.assertEquals(Long.valueOf(assertSecondTimestamp),Long.valueOf(secondTimestamp));
+
+	}
+
+	@Test
+	public void testGetSecondTimestamp1() {
+		String startStrDate = "2023-03-21 11:00:00";
+		Date startDate = DateTimeUtil.parse(startStrDate, DatePattern.DATE_MIDDLE_LINE_TIME_COLON_PATTERN);
+		Calendar calendar = DateTimeUtil.getCalendar(startDate);
+		Integer secondTimestamp = DateTimeUtil.getSecondTimestamp(calendar);
+		int assertSecondTimestamp = 1679367600;
+		Assert.assertEquals(Long.valueOf(assertSecondTimestamp),Long.valueOf(secondTimestamp));
+	}
 }

@@ -3,6 +3,7 @@ package com.threesides.collection;
 import com.sun.istack.internal.Nullable;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -30,6 +31,12 @@ public class CollectionUtil {
 		return !isEmpty(map);
 	}
 
+	public static boolean isEmpty(Iterable<?> iterable) {
+		return null == iterable || isEmpty(iterable.iterator());
+	}
+	public static boolean isEmpty(Iterator<?> Iterator) {
+		return null == Iterator || !Iterator.hasNext();
+	}
 
 
 }

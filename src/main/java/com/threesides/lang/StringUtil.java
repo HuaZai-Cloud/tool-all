@@ -416,20 +416,7 @@ public class StringUtil {
 		return buf.toString();
 	}
 
-	/**
-	 * <p>Joins the elements of the provided {@code Iterable} into
-	 * a single String containing the provided elements.</p>
-	 *
-	 * <p>No delimiter is added before or after the list. Null objects or empty
-	 * strings within the iteration are represented by empty strings.</p>
-	 *
-	 * <p>See the examples here: {@link #join(Object[],char)}. </p>
-	 *
-	 * @param iterable  the {@code Iterable} providing the values to join together, may be null
-	 * @param separator  the separator character to use
-	 * @return the joined String, {@code null} if null iterator input
-	 * @since 2.3
-	 */
+
 	public static String join(final Iterable<?> iterable, final char separator) {
 		if (iterable == null) {
 			return null;
@@ -437,20 +424,7 @@ public class StringUtil {
 		return join(iterable.iterator(), separator);
 	}
 
-	/**
-	 * <p>Joins the elements of the provided {@code Iterable} into
-	 * a single String containing the provided elements.</p>
-	 *
-	 * <p>No delimiter is added before or after the list.
-	 * A {@code null} separator is the same as an empty String ("").</p>
-	 *
-	 * <p>See the examples here: {@link #join(Object[],String)}. </p>
-	 *
-	 * @param iterable  the {@code Iterable} providing the values to join together, may be null
-	 * @param separator  the separator character to use, null treated as ""
-	 * @return the joined String, {@code null} if null iterator input
-	 * @since 2.3
-	 */
+
 	public static String join(final Iterable<?> iterable, final String separator) {
 		if (iterable == null) {
 			return null;
@@ -458,20 +432,6 @@ public class StringUtil {
 		return join(iterable.iterator(), separator);
 	}
 
-	/**
-	 * <p>Joins the elements of the provided {@code Iterator} into
-	 * a single String containing the provided elements.</p>
-	 *
-	 * <p>No delimiter is added before or after the list. Null objects or empty
-	 * strings within the iteration are represented by empty strings.</p>
-	 *
-	 * <p>See the examples here: {@link #join(Object[],char)}. </p>
-	 *
-	 * @param iterator  the {@code Iterator} of values to join together, may be null
-	 * @param separator  the separator character to use
-	 * @return the joined String, {@code null} if null iterator input
-	 * @since 2.0
-	 */
 	public static String join(final Iterator<?> iterator, final char separator) {
 
 		// handle null, zero and one elements before building a buffer
@@ -503,19 +463,6 @@ public class StringUtil {
 		return buf.toString();
 	}
 
-	/**
-	 * <p>Joins the elements of the provided {@code Iterator} into
-	 * a single String containing the provided elements.</p>
-	 *
-	 * <p>No delimiter is added before or after the list.
-	 * A {@code null} separator is the same as an empty String ("").</p>
-	 *
-	 * <p>See the examples here: {@link #join(Object[],String)}. </p>
-	 *
-	 * @param iterator  the {@code Iterator} of values to join together, may be null
-	 * @param separator  the separator character to use, null treated as ""
-	 * @return the joined String, {@code null} if null iterator input
-	 */
 	public static String join(final Iterator<?> iterator, final String separator) {
 
 		// handle null, zero and one elements before building a buffer
