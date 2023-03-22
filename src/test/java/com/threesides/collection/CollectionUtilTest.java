@@ -1,10 +1,14 @@
 package com.threesides.collection;
 
-import org.junit.Assert;
+import com.sun.xml.internal.ws.policy.PolicyMap;
+import com.sun.xml.internal.ws.streaming.DOMStreamReader;
+import com.sun.xml.internal.ws.util.xml.NamespaceContextExAdaper;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.TreeSet;
 
 import static org.junit.Assert.*;
 
@@ -57,5 +61,16 @@ public class CollectionUtilTest {
 		hashMap.put("isEmpty","isEmpty");
 		boolean notEmptyMap = CollectionUtil.isNotEmpty(hashMap);
 		assertTrue(notEmptyMap);
+	}
+
+	@Test
+	public void testIsEmpty1() {
+		boolean empty = CollectionUtil.isEmpty(new ArrayList<>());
+		System.out.println("empty = " + empty);
+
+	}
+
+	@Test
+	public void testIsEmpty2() {
 	}
 }

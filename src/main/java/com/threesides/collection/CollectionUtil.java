@@ -1,6 +1,5 @@
 package com.threesides.collection;
 
-import com.sun.istack.internal.Nullable;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -23,11 +22,11 @@ public class CollectionUtil {
 		return !isEmpty(coll);
 	}
 
-	public static boolean isEmpty(@Nullable Map<?, ?> map) {
+	public static boolean isEmpty( Map<?, ?> map) {
 		return (map == null || map.isEmpty());
 	}
 
-	public static boolean isNotEmpty(@Nullable Map<?, ?> map) {
+	public static boolean isNotEmpty( Map<?, ?> map) {
 		return !isEmpty(map);
 	}
 
