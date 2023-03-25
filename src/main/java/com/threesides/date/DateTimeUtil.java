@@ -18,22 +18,52 @@ public class DateTimeUtil {
 
 
 	// TODO DateTime ----------------------------------------------------------------
+
+	/**
+	 * 获取当前日期
+	 *
+	 * @return 日期
+	 */
 	public static Date getDateTime() {
 		return new Date();
 	}
 
+	/**
+	 * 根据日历获取日期
+	 *
+	 * @param calendar 日历
+	 * @return 日期
+	 */
 	public static Date getDateTime(Calendar calendar) {
 		return calendar.getTime();
 	}
 
+	/**
+	 * 根据毫秒时间戳获取日期
+	 *
+	 * @param millisecondTimestamp 毫秒时间戳
+	 * @return 日期
+	 */
 	public static Date getDateTime(long millisecondTimestamp) {
 		return new Date(millisecondTimestamp);
 	}
 
+	/**
+	 * 根据秒时间戳获取日期
+	 *
+	 * @param secondTimestamp 秒时间戳
+	 * @return 日期
+	 */
 	public static Date getDateTime(int secondTimestamp) {
 		return new Date(secondTimestamp * 1000L);
 	}
 
+	/**
+	 * 根据毫秒时间戳获取日历
+	 *
+	 * @param millisecondTimestamp 毫秒时间戳
+	 * @return 日历
+	 */
 	public static Calendar getCalendar(long millisecondTimestamp) {
 		Calendar calendar = getCalendar();
 		Date dateTime = getDateTime(millisecondTimestamp);
@@ -41,6 +71,12 @@ public class DateTimeUtil {
 		return calendar;
 	}
 
+	/**
+	 * 根据秒时间戳获取日历
+	 *
+	 * @param secondTimestamp 秒时间戳
+	 * @return 日历
+	 */
 	public static Calendar getCalendar(int secondTimestamp) {
 		Calendar calendar = getCalendar();
 		Date dateTime = getDateTime(secondTimestamp);
@@ -48,47 +84,104 @@ public class DateTimeUtil {
 		return calendar;
 	}
 
+	/**
+	 * 获取当前日历
+	 *
+	 * @return 日历
+	 */
 	public static Calendar getCalendar() {
 		return Calendar.getInstance();
 	}
 
+	/**
+	 * 根据日期获取日历
+	 *
+	 * @param date 日期
+	 * @return 日历
+	 */
 	public static Calendar getCalendar(Date date) {
 		Calendar calendar = getCalendar();
 		calendar.setTime(date);
 		return calendar;
 	}
 
+	/**
+	 * 获取当前毫秒时间戳
+	 *
+	 * @return 毫秒时间戳
+	 */
 	public static Long getMillisecondTimestamp() {
 		return getDateTime().getTime();
 	}
 
+	/**
+	 * 根据日期获取毫秒时间戳
+	 *
+	 * @param date 日期
+	 * @return 毫秒时间戳
+	 */
 	public static Long getMillisecondTimestamp(Date date) {
 		return date.getTime();
 	}
 
+	/**
+	 * 根据日历获取毫秒时间戳
+	 *
+	 * @param calendar 日历
+	 * @return 毫秒时间戳
+	 */
 	public static Long getMillisecondTimestamp(Calendar calendar) {
 		return calendar.getTime().getTime();
 	}
 
+	/**
+	 * 获取当前秒时间戳
+	 *
+	 * @return 秒时间戳
+	 */
 	public static Integer getSecondTimestamp() {
 		return Integer.valueOf(String.valueOf(getDateTime().getTime() / 1000));
 	}
 
+	/**
+	 * 根据日期获取秒时间戳
+	 *
+	 * @param date 日期
+	 * @return 秒时间戳
+	 */
 	public static Integer getSecondTimestamp(Date date) {
 		return Integer.valueOf(String.valueOf(date.getTime() / 1000));
 	}
 
+	/**
+	 * 根据日历获取秒时间戳
+	 *
+	 * @param calendar 日历
+	 * @return 秒时间戳
+	 */
 	public static Integer getSecondTimestamp(Calendar calendar) {
 		return Integer.valueOf(String.valueOf(calendar.getTime().getTime() / 1000));
 	}
 
-
-
+	/**
+	 * 根据日期格式格式化日期
+	 *
+	 * @param date 日期
+	 * @param datePattern 日期格式
+	 * @return 格式化日期
+	 */
 	public static String format(Date date, String datePattern) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(datePattern);
 		return dateFormat.format(date);
 	}
 
+	/**
+	 * 根据日期格式解析日期
+	 *
+	 * @param dateTime 字符串日期
+	 * @param datePattern 日期格式
+	 * @return 日期
+	 */
 	public static Date parse(String dateTime, String datePattern) {
 		try {
 			SimpleDateFormat dateFormat = new SimpleDateFormat(datePattern);
@@ -100,64 +193,129 @@ public class DateTimeUtil {
 	}
 
 	// TODO year ----------------------------------------------------------------
+
+	/**
+	 * 获取当前年份
+	 *
+	 * @return 年份
+	 */
 	public static int getThisYear() {
 		return getYear(Calendar.getInstance());
 	}
 
+	/**
+	 * 根据日期获取年份
+	 *
+	 * @param date 日期
+	 * @return 年份
+	 */
 	public static int getYear(Date date) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
 		return getYear(calendar);
 	}
 
+	/**
+	 * 根据日历获取年份
+	 *
+	 * @param calendar 日历
+	 * @return 年份
+	 */
 	public static int getYear(Calendar calendar) {
 		return calendar.get(Calendar.YEAR);
 	}
 
 
-	// beginOfYear
+	// beginOfYear ----------------------------------------------------------------
 
+	/**
+	 * 获取当前年开始时间
+	 *
+	 * @return 年开始时间
+	 */
 	public static Date beginOfThisYear() {
 		Calendar calendar = Calendar.getInstance();
 		return beginOfYear(calendar);
 	}
 
+	/**
+	 * 根据年份获取年开始时间
+	 *
+	 * @param year 年份
+	 * @return 年开始时间
+	 */
 	public static Date beginOfYear(int year) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Calendar.YEAR, year);
 		return beginOfYear(calendar);
 	}
 
+	/**
+	 * 根据日期获取年开始时间
+	 *
+	 * @param date 日期
+	 * @return 年开始时间
+	 */
 	public static Date beginOfYear(Date date) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
 		return beginOfYear(calendar);
 	}
 
+	/**
+	 * 根据日历获取年开始时间
+	 *
+	 * @param calendar 日历
+	 * @return 年开始时间
+	 */
 	public static Date beginOfYear(Calendar calendar) {
 		calendar.set(Calendar.MONTH, 0);
 		calendar.set(Calendar.DATE, 1);
 		return setBeginTimeOfDay(calendar).getTime();
 	}
 
-	// endOfYear
+	// endOfYear ----------------------------------------------------------------
+
+	/**
+	 * 获取当前年结束时间
+	 *
+	 * @return 年结束时间
+	 */
 	public static Date endOfThisYear() {
 		Calendar calendar = Calendar.getInstance();
 		return endOfYear(calendar);
 	}
 
+	/**
+	 * 根据年份获取年结束时间
+	 *
+	 * @param year 年份
+	 * @return 年结束时间
+	 */
 	public static Date endOfYear(int year) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Calendar.YEAR, year);
 		return endOfYear(calendar);
 	}
 
+	/**
+	 * 根据日期获取年结束时间
+	 *
+	 * @param date 日期
+	 * @return 年结束时间
+	 */
 	public static Date endOfYear(Date date) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
 		return endOfYear(calendar);
 	}
 
+	/**
+	 * 根据日历获取年结束时间
+	 *
+	 * @param calendar 日历
+	 * @return 年结束时间
+	 */
 	public static Date endOfYear(Calendar calendar) {
 		int monthsOfYear = calendar.getActualMaximum(Calendar.MONTH);
 		calendar.set(Calendar.MONTH, monthsOfYear);
@@ -166,21 +324,47 @@ public class DateTimeUtil {
 		return setEndTimeOfDay(calendar).getTime();
 	}
 
-	// betweenYear
+	// betweenYear ----------------------------------------------------------------
+
+	/**
+	 * 根据开始、结束时间 获取相隔几年
+	 *
+	 * @param beginDate 开始日期
+	 * @param endDate 结束日期
+	 * @return 年数
+	 */
 	public static int betweenYear(Date beginDate, Date endDate) {
 		return getYear(endDate) - getYear(beginDate);
 	}
 
+	/**
+	 * 根据开始日历 、结束日历 获取相隔几年
+	 *
+	 * @param beginCalendar 开始日历
+	 * @param endCalendar 结束日历
+	 * @return 年数
+	 */
 	public static int betweenYear(Calendar beginCalendar, Calendar endCalendar) {
 		return getYear(endCalendar) - getYear(beginCalendar);
 	}
 
 	// TODO month ----------------------------------------------------------------
 
+	/**
+	 * 获取当前年份月份
+	 *
+	 * @return 月份
+	 */
 	public static int getThisMonth() {
 		return getMonth(Calendar.getInstance());
 	}
 
+	/**
+	 * 根据日期获取月份
+	 *
+	 * @param date 日期
+	 * @return 月份
+	 */
 	public static int getMonth(Date date) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
