@@ -371,18 +371,36 @@ public class DateTimeUtil {
 		return getMonth(calendar);
 	}
 
+	/**
+	 * 根据日历获取月份
+	 *
+	 * @param calendar 日历
+	 * @return 月份
+	 */
 	public static int getMonth(Calendar calendar) {
 		return calendar.get(Calendar.MONTH) + 1;
 	}
 
 
-	// beginOfMonth
+	// beginOfMonth ----------------------------------------------------------------
 
+	/**
+	 * 获取当前月开始时间
+	 *
+	 * @return 月开始时间
+	 */
 	public static Date beginOfThisMonth() {
 		Calendar calendar = Calendar.getInstance();
 		return beginOfMonth(calendar);
 	}
 
+	/**
+	 * 根据年份、月份获取月开始时间
+	 *
+	 * @param year 年份
+	 * @param month 月份
+	 * @return 月开始时间
+	 */
 	public static Date beginOfMonth(int year, int month) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Calendar.YEAR, year);
@@ -390,22 +408,46 @@ public class DateTimeUtil {
 		return beginOfMonth(calendar);
 	}
 
+	/**
+	 * 根据日期获取月开始时间
+	 *
+	 * @param date 日期
+	 * @return 月开始时间
+	 */
 	public static Date beginOfMonth(Date date) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
 		return beginOfMonth(calendar);
 	}
 
+	/**
+	 * 根据日历获取月开始时间
+	 *
+	 * @param calendar 日历
+	 * @return 月开始时间
+	 */
 	public static Date beginOfMonth(Calendar calendar) {
 		calendar.set(Calendar.DATE, 1);
 		return setBeginTimeOfDay(calendar).getTime();
 	}
 
+	/**
+	 * 获取当前月结束时间
+	 *
+	 * @return 月结束时间
+	 */
 	public static Date endOfThisMonth() {
 		Calendar calendar = Calendar.getInstance();
 		return endOfMonth(calendar);
 	}
 
+	/**
+	 * 根据年份、月份获取月结束时间
+	 *
+	 * @param year 年份
+	 * @param month 月份
+	 * @return 月结束时间
+	 */
 	public static Date endOfMonth(int year, int month) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Calendar.YEAR, year);
@@ -413,6 +455,12 @@ public class DateTimeUtil {
 		return endOfMonth(calendar);
 	}
 
+	/**
+	 * 根据日期获取月结束时间
+	 *
+	 * @param date 日期
+	 * @return 月结束时间
+	 */
 	public static Date endOfMonth(Date date) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
