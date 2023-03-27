@@ -4,6 +4,8 @@ import com.sun.xml.internal.xsom.impl.scd.Iterators;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 
 import static org.junit.Assert.*;
 
@@ -36,6 +38,9 @@ public class BeanUtilTest {
 
 		System.out.println("user = " + user);
 		System.out.println("vo = " + vo);
+
+		new HashMap<>();
+		new HashSet<>();
 
 	}
 }
