@@ -210,8 +210,7 @@ public class DateTimeUtil {
 	 * @return 年份
 	 */
 	public static int getYear(Date date) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
+		Calendar calendar = getCalendar(date);
 		return getYear(calendar);
 	}
 
@@ -234,7 +233,7 @@ public class DateTimeUtil {
 	 * @return 年开始时间
 	 */
 	public static Date beginOfThisYear() {
-		Calendar calendar = Calendar.getInstance();
+		Calendar calendar = getCalendar();
 		return beginOfYear(calendar);
 	}
 
@@ -245,7 +244,7 @@ public class DateTimeUtil {
 	 * @return 年开始时间
 	 */
 	public static Date beginOfYear(int year) {
-		Calendar calendar = Calendar.getInstance();
+		Calendar calendar = getCalendar();
 		calendar.set(Calendar.YEAR, year);
 		return beginOfYear(calendar);
 	}
@@ -257,8 +256,7 @@ public class DateTimeUtil {
 	 * @return 年开始时间
 	 */
 	public static Date beginOfYear(Date date) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
+		Calendar calendar = getCalendar(date);
 		return beginOfYear(calendar);
 	}
 
@@ -282,7 +280,7 @@ public class DateTimeUtil {
 	 * @return 年结束时间
 	 */
 	public static Date endOfThisYear() {
-		Calendar calendar = Calendar.getInstance();
+		Calendar calendar = getCalendar();
 		return endOfYear(calendar);
 	}
 
@@ -293,7 +291,7 @@ public class DateTimeUtil {
 	 * @return 年结束时间
 	 */
 	public static Date endOfYear(int year) {
-		Calendar calendar = Calendar.getInstance();
+		Calendar calendar = getCalendar();
 		calendar.set(Calendar.YEAR, year);
 		return endOfYear(calendar);
 	}
@@ -305,8 +303,7 @@ public class DateTimeUtil {
 	 * @return 年结束时间
 	 */
 	public static Date endOfYear(Date date) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
+		Calendar calendar = getCalendar(date);
 		return endOfYear(calendar);
 	}
 
@@ -327,22 +324,22 @@ public class DateTimeUtil {
 	// betweenYear ----------------------------------------------------------------
 
 	/**
-	 * 根据开始、结束时间 获取相隔几年
+	 * 根据开始日期、结束日期 获取间隔年数
 	 *
 	 * @param beginDate 开始日期
 	 * @param endDate 结束日期
-	 * @return 年数
+	 * @return 间隔年数
 	 */
 	public static int betweenYear(Date beginDate, Date endDate) {
 		return getYear(endDate) - getYear(beginDate);
 	}
 
 	/**
-	 * 根据开始日历 、结束日历 获取相隔几年
+	 * 根据开始日历 、结束日历 获取间隔年数
 	 *
 	 * @param beginCalendar 开始日历
 	 * @param endCalendar 结束日历
-	 * @return 年数
+	 * @return 间隔年数
 	 */
 	public static int betweenYear(Calendar beginCalendar, Calendar endCalendar) {
 		return getYear(endCalendar) - getYear(beginCalendar);
@@ -356,7 +353,7 @@ public class DateTimeUtil {
 	 * @return 月份
 	 */
 	public static int getThisMonth() {
-		return getMonth(Calendar.getInstance());
+		return getMonth(getCalendar());
 	}
 
 	/**
@@ -366,8 +363,7 @@ public class DateTimeUtil {
 	 * @return 月份
 	 */
 	public static int getMonth(Date date) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
+		Calendar calendar = getCalendar(date);
 		return getMonth(calendar);
 	}
 
@@ -390,7 +386,7 @@ public class DateTimeUtil {
 	 * @return 月开始时间
 	 */
 	public static Date beginOfThisMonth() {
-		Calendar calendar = Calendar.getInstance();
+		Calendar calendar = getCalendar();
 		return beginOfMonth(calendar);
 	}
 
@@ -402,7 +398,7 @@ public class DateTimeUtil {
 	 * @return 月开始时间
 	 */
 	public static Date beginOfMonth(int year, int month) {
-		Calendar calendar = Calendar.getInstance();
+		Calendar calendar = getCalendar();
 		calendar.set(Calendar.YEAR, year);
 		calendar.set(Calendar.MONTH, month - 1);
 		return beginOfMonth(calendar);
@@ -415,8 +411,7 @@ public class DateTimeUtil {
 	 * @return 月开始时间
 	 */
 	public static Date beginOfMonth(Date date) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
+		Calendar calendar = getCalendar(date);
 		return beginOfMonth(calendar);
 	}
 
@@ -437,7 +432,7 @@ public class DateTimeUtil {
 	 * @return 月结束时间
 	 */
 	public static Date endOfThisMonth() {
-		Calendar calendar = Calendar.getInstance();
+		Calendar calendar = getCalendar();
 		return endOfMonth(calendar);
 	}
 
@@ -449,7 +444,7 @@ public class DateTimeUtil {
 	 * @return 月结束时间
 	 */
 	public static Date endOfMonth(int year, int month) {
-		Calendar calendar = Calendar.getInstance();
+		Calendar calendar = getCalendar();
 		calendar.set(Calendar.YEAR, year);
 		calendar.set(Calendar.MONTH, month - 1);
 		return endOfMonth(calendar);
@@ -462,23 +457,42 @@ public class DateTimeUtil {
 	 * @return 月结束时间
 	 */
 	public static Date endOfMonth(Date date) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
+		Calendar calendar = getCalendar(date);
 		return endOfMonth(calendar);
 	}
 
+	/**
+	 * 根据日历获取月结束时间
+	 *
+	 * @param calendar 日历
+	 * @return 月结束时间
+	 */
 	public static Date endOfMonth(Calendar calendar) {
 		int daysOfMonth = calendar.getActualMaximum(Calendar.DATE);
 		calendar.set(Calendar.DATE, daysOfMonth);
 		return setEndTimeOfDay(calendar).getTime();
 	}
 
+	/**
+	 * 根据开始日期、结束日期获取间隔月数
+	 *
+	 * @param beginDate 开始日期
+	 * @param endDate 结束日期
+	 * @return 间隔月数
+	 */
 	public static int betweenMonth(Date beginDate, Date endDate) {
 		int betweenYear = betweenYear(beginDate, endDate);
 		int betweenMonth = getMonth(endDate) - getMonth(beginDate);
 		return betweenYear * 12 + betweenMonth;
 	}
 
+	/**
+	 * 根据开始日历、结束日历获取间隔月数
+	 *
+	 * @param beginCalendar 开始日历
+	 * @param endCalendar 结束日历
+	 * @return 间隔月数
+	 */
 	public static int betweenMonth(Calendar beginCalendar, Calendar endCalendar) {
 		int betweenYear = betweenYear(beginCalendar, endCalendar);
 		int betweenMonth = getMonth(endCalendar) - getMonth(beginCalendar);
@@ -487,100 +501,210 @@ public class DateTimeUtil {
 
 	// TODO DAY ----------------------------------------------------------------
 
+	/**
+	 * 获取今天在今年第几天
+	 *
+	 * @return 在这一年第几天
+	 */
 	public static int getThisDayOfYear() {
-		return getDayOfYear(Calendar.getInstance());
+		return getDayOfYear(getCalendar());
 	}
 
+	/**
+	 * 根据日期获取在这一年第几天
+	 *
+	 * @param date 日期
+	 * @return 在这一年第几天
+	 */
 	public static int getDayOfYear(Date date) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
+		Calendar calendar = getCalendar(date);
 		return getDayOfYear(calendar);
 	}
 
+	/**
+	 * 根据日历获取在这一年第几天
+	 *
+	 * @param calendar 日历
+	 * @return 在这一年第几天
+	 */
 	public static int getDayOfYear(Calendar calendar) {
 		return calendar.get(Calendar.DAY_OF_YEAR);
 	}
 
+	/**
+	 * 获取今天在这个月第几天
+	 *
+	 * @return 在这个月第几天
+	 */
 	public static int getThisDayOfMonth() {
-		return getDayOfMonth(Calendar.getInstance());
+		return getDayOfMonth(getCalendar());
 	}
 
+	/**
+	 * 根据日期获取在这一个月第几天
+	 *
+	 * @param date 日期
+	 * @return 在这一个月第几天
+	 */
 	public static int getDayOfMonth(Date date) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
+		Calendar calendar = getCalendar(date);
 		return getDayOfMonth(calendar);
 	}
 
+	/**
+	 * 根据日历获取在这一个月第几天
+	 *
+	 * @param calendar 日历
+	 * @return 在这一个月第几天
+	 */
 	public static int getDayOfMonth(Calendar calendar) {
 		return calendar.get(Calendar.DAY_OF_MONTH);
 	}
 
-	// beginOfDay
+	// beginOfDay -------------------------------------------------------
+
+	/**
+	 * 获取今天开始时间
+	 *
+	 * @return 今天开始时间
+	 */
 	public static Date beginOfThisDay() {
-		return beginOfDay(Calendar.getInstance());
+		return beginOfDay(getCalendar());
 	}
 
+	/**
+	 * 根据年份、月份、月天数获取一天的开始时间
+	 *
+	 * @param year 年份
+	 * @param month 月份
+	 * @param dayOfMonth 一个月的第几天
+	 * @return 一天的开始时间
+	 */
 	public static Date beginOfDay(int year, int month, int dayOfMonth) {
-		Calendar calendar = Calendar.getInstance();
+		Calendar calendar = getCalendar();
 		calendar.set(Calendar.YEAR, year);
 		calendar.set(Calendar.MONTH, month - 1);
 		calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 		return beginOfDay(calendar);
 	}
 
+	/**
+	 * 根据年份、一年的第几天获取一天的开始时间
+	 *
+	 * @param year 年份
+	 * @param dayOfYear 一年的第几天
+	 * @return 一天的开始时间
+	 */
 	public static Date beginOfDay(int year, int dayOfYear) {
-		Calendar calendar = Calendar.getInstance();
+		Calendar calendar = getCalendar();
 		calendar.set(Calendar.YEAR, year);
 		calendar.set(Calendar.DAY_OF_YEAR, dayOfYear);
 		return beginOfDay(calendar);
 	}
 
+	/**
+	 * 根据日期获取一天的开始时间
+	 *
+	 * @param date 日期
+	 * @return 一天的开始时间
+	 */
 	public static Date beginOfDay(Date date) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
+		Calendar calendar = getCalendar(date);
 		return beginOfDay(calendar);
 	}
 
 
+	/**
+	 * 根据日历获取一天的开始时间
+	 *
+	 * @param calendar 日历
+	 * @return 一天的开始时间
+	 */
 	public static Date beginOfDay(Calendar calendar) {
 		return setBeginTimeOfDay(calendar).getTime();
 	}
 
 
-	// endOfDay
+	// endOfDay ----------------------------------------------------------------
+
+	/**
+	 * 获取今天结束时间
+	 *
+	 * @return 今天结束时间
+	 */
 	public static Date endOfThisDay() {
-		return endOfDay(Calendar.getInstance());
+		return endOfDay(getCalendar());
 	}
 
+	/**
+	 * 根据年份、一年的第几天获取一天的结束时间
+	 *
+	 * @param year 年份
+	 * @param dayOfYear 一年的第几天
+	 * @return 一天的结束时间
+	 */
 	public static Date endOfDay(int year, int dayOfYear) {
-		Calendar calendar = Calendar.getInstance();
+		Calendar calendar = getCalendar();
 		calendar.set(Calendar.YEAR, year);
 		calendar.set(Calendar.DAY_OF_YEAR, dayOfYear);
 		return endOfDay(calendar);
 	}
 
+	/**
+	 * 根据年份、月份、月的第几天获取一天的结束时间
+	 *
+	 * @param year 年份
+	 * @param month 月份
+	 * @param dayOfMonth 月的第几天
+	 * @return 一天的结束时间
+	 */
 	public static Date endOfDay(int year, int month, int dayOfMonth) {
-		Calendar calendar = Calendar.getInstance();
+		Calendar calendar = getCalendar();
 		calendar.set(Calendar.YEAR, year);
 		calendar.set(Calendar.MONTH, month - 1);
 		calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 		return endOfDay(calendar);
 	}
 
+	/**
+	 * 根据日期获取一天结束时间
+	 *
+	 * @param date 日期
+	 * @return 一天结束时间
+	 */
 	public static Date endOfDay(Date date) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
+		Calendar calendar = getCalendar(date);
 		return endOfDay(calendar);
 	}
 
+	/**
+	 * 根据日历获取一天结束时间
+	 *
+	 * @param calendar 日历
+	 * @return 一天结束时间
+	 */
 	public static Date endOfDay(Calendar calendar) {
 		return setEndTimeOfDay(calendar).getTime();
 	}
 
+	/**
+	 * 根据开始日历、结束日历获取间隔天数
+	 *
+	 * @param beginCalendar 开始日历
+	 * @param endCalendar 结束日历
+	 * @return 间隔天数
+	 */
 	public static long betweenDay(Calendar beginCalendar, Calendar endCalendar) {
 		return betweenDay(beginCalendar.getTime(), endCalendar.getTime());
 	}
 
+	/**
+	 * 根据开始日期、结束日期获取间隔天数
+	 *
+	 * @param beginDate 开始日期
+	 * @param endDate 结束日期
+	 * @return 间隔天数
+	 */
 	public static long betweenDay(Date beginDate, Date endDate) {
 		return between(beginDate, endDate, DateTimeUnit.DAY);
 
@@ -588,25 +712,48 @@ public class DateTimeUtil {
 
 
 	// TODO WEEK ----------------------------------------------------------------
-	// 获取周数
+
+	/**
+	 * 根据日期获取一年中第几周
+	 *
+	 * @param date 日期
+	 * @return 一年中第几周
+	 */
 	public static int weekOfYear(Date date) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
+		Calendar calendar = getCalendar(date);
 		return weekOfYear(calendar);
 	}
 
+	/**
+	 * 根据日历获取一年中第几周
+	 *
+	 * @param calendar 日历
+	 * @return 一年中第几周
+	 */
 	public static int weekOfYear(Calendar calendar) {
 		calendar.setFirstDayOfWeek(MONDAY);
 		return calendar.get(Calendar.WEEK_OF_YEAR);
 	}
 
 	// 按每年最大周数计算周数
+
+	/**
+	 * 根据日期获取一年最大周数中第几周（一年中一周即使一天也算一周）
+	 *
+	 * @param date 日期
+	 * @return 一年最大周数中第几周
+	 */
 	public static int weekOfYearMaxWeek(Date date) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
+		Calendar calendar = getCalendar(date);
 		return weekOfYearMaxWeek(calendar);
 	}
 
+	/**
+	 * 根据日历获取一年最大周数中第几周（一年中一周即使一天也算一周）
+	 *
+	 * @param calendar 日历
+	 * @return 一年最大周数中第几周
+	 */
 	public static int weekOfYearMaxWeek(Calendar calendar) {
 		calendar.setFirstDayOfWeek(MONDAY);
 		int week = calendar.get(Calendar.WEEK_OF_YEAR);
