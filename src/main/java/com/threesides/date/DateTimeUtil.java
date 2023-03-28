@@ -767,67 +767,140 @@ public class DateTimeUtil {
 	}
 
 
-	// beginOfWeek
+	// beginOfWeek ----------------------------------------------------------------
+
+	/**
+	 * 根据日期获取周开始时间
+	 *
+	 * @param date 日期
+	 * @return 周开始时间
+	 */
 	public static Date beginOfWeek(Date date) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
+		Calendar calendar = getCalendar(date);
 		return beginOfWeek(calendar);
 	}
 
+	/**
+	 * 根据年份、一年第几周数获取周开始时间
+	 *
+	 * @param year 年数
+	 * @param weekOfYear 一年第几周
+	 * @return 周开始时间
+	 */
 	public static Date beginOfWeek(int year, int weekOfYear) {
-		Calendar calendar = Calendar.getInstance();
+		Calendar calendar = getCalendar();
 		calendar.set(Calendar.YEAR, year);
 		calendar.set(Calendar.WEEK_OF_YEAR, weekOfYear);
 		return beginOfWeek(calendar);
 	}
 
 
+	/**
+	 * 根据日历获取周开始时间
+	 *
+	 * @param calendar 日历
+	 * @return 周开始时间
+	 */
 	public static Date beginOfWeek(Calendar calendar) {
 		calendar.setFirstDayOfWeek(Calendar.MONDAY);
 		calendar.set(Calendar.DAY_OF_WEEK, MONDAY);
 		return setBeginTimeOfDay(calendar).getTime();
 	}
 
-	// endOfWeek
-
+	// endOfWeek ----------------------------------------------------------------
+	/**
+	 * 根据日期获取周结束时间
+	 *
+	 * @param date 日期
+	 * @return 周结束时间
+	 */
 	public static Date endOfWeek(Date date) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
+		Calendar calendar = getCalendar(date);
 		return endOfWeek(calendar);
 	}
 
+	/**
+	 * 根据年份、一年第几周数获取周结束时间
+	 *
+	 * @param year 年份
+	 * @param weekOfYear 一年第几周
+	 * @return 周结束时间
+	 */
 	public static Date endOfWeek(int year, int weekOfYear) {
-		Calendar calendar = Calendar.getInstance();
+		Calendar calendar = getCalendar();
 		calendar.set(Calendar.YEAR, year);
 		calendar.set(Calendar.WEEK_OF_YEAR, weekOfYear);
 		return endOfWeek(calendar);
 	}
 
+	/**
+	 * 根据日历获取周结束时间
+	 *
+	 * @param calendar 日历
+	 * @return 周结束时间
+	 */
 	public static Date endOfWeek(Calendar calendar) {
 		calendar.setFirstDayOfWeek(Calendar.MONDAY);
 		calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
 		return setEndTimeOfDay(calendar).getTime();
 	}
 
+	/**
+	 * 获取开始日历、结束日历获取相差周数
+	 *
+	 * @param beginCalendar 开始日历
+	 * @param endCalendar 结束日历
+	 * @return 相差周数
+	 */
 	public static long betweenWeek(Calendar beginCalendar, Calendar endCalendar) {
 		return betweenWeek(beginCalendar.getTime(), endCalendar.getTime());
 	}
 
+	/**
+	 * 获取开始日期、结束日期获取相差周数
+	 *
+	 * @param beginDate 开始日期
+	 * @param endDate 结束日期
+	 * @return 相差周数
+	 */
 	public static long betweenWeek(Date beginDate, Date endDate) {
 		return between(beginOfWeek(beginDate), beginOfWeek(endDate), DateTimeUnit.WEEK);
 	}
 
+	/**
+	 * 根据开始日期、结束日期获取时间单位间隔
+	 *
+	 * @param beginDate 开始日期
+	 * @param endDate 结束日期
+	 * @param unit 时间单位
+	 * @return 时间单位间隔
+	 */
 	public static long between(Date beginDate, Date endDate, DateTimeUnit unit) {
 		long betweenMillis = endDate.getTime() - beginDate.getTime();
 		return betweenMillis / unit.getMillis();
 	}
 
+	// offset ----------------------------------------------------------------
+
+	/**
+	 * 日期偏移毫秒
+	 *
+	 * @param date 日期
+	 * @param offset 偏移数
+	 * @return 偏移后时间
+	 */
 	public static Date offsetMillisecond(Date date, int offset) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
+		Calendar calendar = getCalendar(date);
 		return offsetMillisecond(calendar, offset);
 	}
 
+	/**
+	 * 日历偏移毫秒
+	 *
+	 * @param calendar 日历
+	 * @param offset 偏移数
+	 * @return 偏移后时间
+	 */
 	public static Date offsetMillisecond(Calendar calendar, int offset) {
 		return offset(calendar, offset, Calendar.MILLISECOND);
 	}

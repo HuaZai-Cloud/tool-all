@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Random;
 
 import static org.junit.Assert.*;
 
@@ -43,4 +44,5 @@ public class BeanUtilTest {
 		new HashSet<>();
 
 	}
+
 }
