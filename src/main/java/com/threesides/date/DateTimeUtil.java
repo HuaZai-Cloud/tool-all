@@ -905,73 +905,164 @@ public class DateTimeUtil {
 		return offset(calendar, offset, Calendar.MILLISECOND);
 	}
 
+	/**
+	 * 日期偏移秒
+	 *
+	 * @param date 日期
+	 * @param offset 偏移数
+	 * @return 偏移后时间
+	 */
 	public static Date offsetSecond(Date date, int offset) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
+		Calendar calendar = getCalendar(date);
 		return offsetSecond(calendar, offset);
 	}
 
+	/**
+	 * 日历偏移秒
+	 *
+	 * @param calendar 日历
+	 * @param offset 偏移数
+	 * @return 偏移后时间
+	 */
 	public static Date offsetSecond(Calendar calendar, int offset) {
 		return offset(calendar, offset, Calendar.SECOND);
 	}
 
+	/**
+	 * 日期偏移分
+	 *
+	 * @param date 日期
+	 * @param offset 偏移数
+	 * @return 偏移后时间
+	 */
 	public static Date offsetMinute(Date date, int offset) {
-
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
+		Calendar calendar = getCalendar(date);
 		return offsetMinute(calendar, offset);
 	}
 
+	/**
+	 * 日历偏移分
+	 *
+	 * @param calendar 日历
+	 * @param offset 偏移数
+	 * @return 偏移后时间
+	 */
 	public static Date offsetMinute(Calendar calendar, int offset) {
 		return offset(calendar, offset, Calendar.MINUTE);
 	}
 
+	/**
+	 * 日期偏移时
+	 *
+	 * @param date 日期
+	 * @param offset 偏移数
+	 * @return 偏移后时间
+	 */
 	public static Date offsetHour(Date date, int offset) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
+		Calendar calendar =getCalendar(date);
 		return offsetHour(calendar, offset);
 	}
 
+	/**
+	 * 日历偏移时
+	 *
+	 * @param calendar 日历
+	 * @param offset 偏移数
+	 * @return 偏移后时间
+	 */
 	public static Date offsetHour(Calendar calendar, int offset) {
 		return offset(calendar, offset, Calendar.HOUR);
 	}
 
+	/**
+	 * 日期偏移天
+	 *
+	 * @param date 日期
+	 * @param offset 偏移数
+	 * @return 偏移后时间
+	 */
 	public static Date offsetDay(Date date, int offset) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
+		Calendar calendar = getCalendar(date);
 		return offsetDay(calendar, offset);
 	}
 
+	/**
+	 * 日历偏移天
+	 *
+	 * @param calendar 日历
+	 * @param offset 偏移数
+	 * @return 偏移后时间
+	 */
 	public static Date offsetDay(Calendar calendar, int offset) {
 		return offset(calendar, offset, Calendar.DAY_OF_YEAR);
 	}
 
+	/**
+	 * 日期偏移周
+	 *
+	 * @param date 日期
+	 * @param offset 偏移数
+	 * @return 偏移后时间
+	 */
 	public static Date offsetWeek(Date date, int offset) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
+		Calendar calendar = getCalendar(date);
 		return offsetWeek(calendar, offset);
 	}
 
+	/**
+	 * 日历偏移周
+	 *
+	 * @param calendar 日历
+	 * @param offset 偏移数
+	 * @return 偏移后时间
+	 */
 	public static Date offsetWeek(Calendar calendar, int offset) {
 		return offset(calendar, offset, Calendar.DAY_OF_WEEK);
 	}
 
+	/**
+	 * 日期偏移月
+	 *
+	 * @param date 日期
+	 * @param offset 偏移数
+	 * @return 偏移后时间
+	 */
 	public static Date offsetMonth(Date date, int offset) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
+		Calendar calendar = getCalendar(date);
 		return offsetMonth(calendar, offset);
 	}
 
+	/**
+	 * 日历偏移月
+	 *
+	 * @param calendar 日历
+	 * @param offset 偏移数
+	 * @return 偏移后时间
+	 */
 	public static Date offsetMonth(Calendar calendar, int offset) {
 		return offset(calendar, offset, Calendar.MONTH);
 	}
 
+	/**
+	 * 日历偏移
+	 *
+	 * @param calendar 日历
+	 * @param offset 偏移数
+	 * @param unit 单位
+	 * @return 偏移后时间
+	 */
 	private static Date offset(Calendar calendar, int offset, int unit) {
 		calendar.add(unit, offset);
 		return calendar.getTime();
 	}
 
 
+	/**
+	 * 设置天开始时间
+	 *
+	 * @param calendar 日历
+	 * @return 天开始日历
+	 */
 	private static Calendar setBeginTimeOfDay(Calendar calendar) {
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);
@@ -980,6 +1071,12 @@ public class DateTimeUtil {
 		return calendar;
 	}
 
+	/**
+	 * 设置天结束时间
+	 *
+	 * @param calendar 日历
+	 * @return 天结束时间
+	 */
 	private static Calendar setEndTimeOfDay(Calendar calendar) {
 		calendar.set(Calendar.HOUR_OF_DAY, 23);
 		calendar.set(Calendar.MINUTE, 59);

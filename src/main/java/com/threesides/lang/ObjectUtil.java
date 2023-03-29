@@ -15,12 +15,7 @@ import java.util.*;
  */
 public class ObjectUtil {
 
-
-	public static boolean equals(Object obj1, Object obj2) {
-		return equal(obj1, obj2);
-	}
-
-	public static boolean equal(Object obj1, Object obj2) {
+	private static boolean equals(Object obj1, Object obj2) {
 		if (obj1 instanceof BigDecimal && obj2 instanceof BigDecimal) {
 			return NumberUtil.equals((BigDecimal) obj1, (BigDecimal) obj2);
 		}
@@ -28,7 +23,7 @@ public class ObjectUtil {
 	}
 
 	public static boolean notEqual(Object obj1, Object obj2) {
-		return !equal(obj1, obj2);
+		return !equals(obj1, obj2);
 	}
 
 	public static int length(Object obj) {
@@ -70,22 +65,7 @@ public class ObjectUtil {
 		return -1;
 	}
 
-	/**
-	 * 对象中是否包含元素<br>
-	 * 支持的对象类型包括：
-	 * <ul>
-	 * <li>String</li>
-	 * <li>Collection</li>
-	 * <li>Map</li>
-	 * <li>Iterator</li>
-	 * <li>Enumeration</li>
-	 * <li>Array</li>
-	 * </ul>
-	 *
-	 * @param obj     对象
-	 * @param element 元素
-	 * @return 是否包含
-	 */
+
 	public static boolean contains(Object obj, Object element) {
 		if (obj == null) {
 			return false;
@@ -107,7 +87,7 @@ public class ObjectUtil {
 			Iterator<?> iter = (Iterator<?>) obj;
 			while (iter.hasNext()) {
 				Object o = iter.next();
-				if (equal(o, element)) {
+				if (equals(o, element)) {
 					return true;
 				}
 			}
@@ -117,7 +97,7 @@ public class ObjectUtil {
 			Enumeration<?> enumeration = (Enumeration<?>) obj;
 			while (enumeration.hasMoreElements()) {
 				Object o = enumeration.nextElement();
-				if (equal(o, element)) {
+				if (equals(o, element)) {
 					return true;
 				}
 			}
@@ -127,7 +107,7 @@ public class ObjectUtil {
 			int len = Array.getLength(obj);
 			for (int i = 0; i < len; i++) {
 				Object o = Array.get(obj, i);
-				if (equal(o, element)) {
+				if (equals(o, element)) {
 					return true;
 				}
 			}
@@ -135,47 +115,20 @@ public class ObjectUtil {
 		return false;
 	}
 
-	/**
-	 * 检查对象是否为null<br>
-	 * 判断标准为：
-	 *
-	 * <pre>
-	 * 1. == null
-	 * 2. equals(null)
-	 * </pre>
-	 */
 	public static boolean isNull(Object obj) {
 		//noinspection ConstantConditions
 		return null == obj || obj.equals(null);
 	}
 
-	/**
-	 * 检查对象是否不为null
-	 *
-	 * @param obj 对象
-	 * @return 是否为null
-	 */
 	public static boolean isNotNull(Object obj) {
 		return !isNull(obj);
 	}
 
-	/**
-	 * 判断指定对象是否为空，支持：
-	 *
-	 * <pre>
-	 * 1. CharSequence
-	 * 2. Map
-	 * 3. Iterable
-	 * 4. Iterator
-	 * 5. Array
-	 * </pre>
-	 */
 	@SuppressWarnings("rawtypes")
 	public static boolean isEmpty(Object obj) {
 		if (null == obj) {
 			return true;
 		}
-
 		if (obj instanceof CharSequence) {
 			return StringUtil.isEmpty((CharSequence) obj);
 		} else if (obj instanceof Map) {
@@ -187,21 +140,9 @@ public class ObjectUtil {
 		} else if (ArrayUtil.isArray(obj)) {
 			return ArrayUtil.isEmpty(obj);
 		}
-
 		return false;
 	}
 
-	/**
-	 * 判断指定对象是否为非空，支持：
-	 *
-	 * <pre>
-	 * 1. CharSequence
-	 * 2. Map
-	 * 3. Iterable
-	 * 4. Iterator
-	 * 5. Array
-	 * </pre>
-	 */
 	public static boolean isNotEmpty(Object obj) {
 		return !isEmpty(obj);
 	}

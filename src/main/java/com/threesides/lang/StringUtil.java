@@ -15,22 +15,11 @@ public class StringUtil {
 
 	private static final int STRING_BUILDER_SIZE = 256;
 
-	public static final String SPACE = " ";
 
 	public static final String EMPTY = "";
 
 	//-----------------------------------------------------------------------
 
-	/**
-	 * <pre>
-	 * StringUtils.isBlank(null)      = true
-	 * StringUtils.isBlank("")        = true
-	 * StringUtils.isBlank(" ")       = true
-	 * StringUtils.isBlank("bob")     = false
-	 * StringUtils.isBlank("  bob  ") = false
-	 * </pre>
-	 *
-	 */
 	public static boolean isBlank(final CharSequence cs) {
 		final int strLen = length(cs);
 		if (strLen == 0) {
@@ -44,64 +33,19 @@ public class StringUtil {
 		return true;
 	}
 
-	/**
-	 *
-	 * <pre>
-	 * StringUtils.isEmpty(null)      = true
-	 * StringUtils.isEmpty("")        = true
-	 * StringUtils.isEmpty(" ")       = false
-	 * StringUtils.isEmpty("bob")     = false
-	 * StringUtils.isEmpty("  bob  ") = false
-	 * </pre>
-	 *
-	 */
 	public static boolean isEmpty(final CharSequence cs) {
 		return cs == null || cs.length() == 0;
 	}
 
-	/**
-	 *
-	 * <pre>
-	 * StringUtils.isNotBlank(null)      = false
-	 * StringUtils.isNotBlank("")        = false
-	 * StringUtils.isNotBlank(" ")       = false
-	 * StringUtils.isNotBlank("bob")     = true
-	 * StringUtils.isNotBlank("  bob  ") = true
-	 * </pre>
-	 *
-	 */
 	public static boolean isNotBlank(final CharSequence cs) {
 		return !isBlank(cs);
 	}
 
-	/**
-	 * <pre>
-	 * StringUtils.isNotEmpty(null)      = false
-	 * StringUtils.isNotEmpty("")        = false
-	 * StringUtils.isNotEmpty(" ")       = true
-	 * StringUtils.isNotEmpty("bob")     = true
-	 * StringUtils.isNotEmpty("  bob  ") = true
-	 * </pre>
-	 *
-	 */
 	public static boolean isNotEmpty(final CharSequence cs) {
 		return !isEmpty(cs);
 	}
 
-	/**
-	 * <pre>
-	 * StringUtils.isMixedCase(null)    = false
-	 * StringUtils.isMixedCase("")      = false
-	 * StringUtils.isMixedCase("ABC")   = false
-	 * StringUtils.isMixedCase("abc")   = false
-	 * StringUtils.isMixedCase("aBc")   = true
-	 * StringUtils.isMixedCase("A c")   = true
-	 * StringUtils.isMixedCase("A1c")   = true
-	 * StringUtils.isMixedCase("a/C")   = true
-	 * StringUtils.isMixedCase("aC\t")  = true
-	 * </pre>
-	 *
-	 */
+
 	public static boolean isMixedCase(final CharSequence cs) {
 		if (isEmpty(cs) || cs.length() == 1) {
 			return false;
@@ -122,22 +66,6 @@ public class StringUtil {
 	}
 
 
-	/**
-	 *
-	 * <pre>
-	 * StringUtils.isNumeric(null)   = false
-	 * StringUtils.isNumeric("")     = false
-	 * StringUtils.isNumeric("  ")   = false
-	 * StringUtils.isNumeric("123")  = true
-	 * StringUtils.isNumeric("\u0967\u0968\u0969")  = true
-	 * StringUtils.isNumeric("12 3") = false
-	 * StringUtils.isNumeric("ab2c") = false
-	 * StringUtils.isNumeric("12-3") = false
-	 * StringUtils.isNumeric("12.3") = false
-	 * StringUtils.isNumeric("-123") = false
-	 * StringUtils.isNumeric("+123") = false
-	 * </pre>
-	 */
 	public static boolean isNumeric(final CharSequence cs) {
 		if (isEmpty(cs)) {
 			return false;
@@ -151,20 +79,6 @@ public class StringUtil {
 		return true;
 	}
 
-	/**
-	 * <pre>
-	 * StringUtils.isNumericSpace(null)   = false
-	 * StringUtils.isNumericSpace("")     = true
-	 * StringUtils.isNumericSpace("  ")   = true
-	 * StringUtils.isNumericSpace("123")  = true
-	 * StringUtils.isNumericSpace("12 3") = true
-	 * StringUtils.isNumeric("\u0967\u0968\u0969")  = true
-	 * StringUtils.isNumeric("\u0967\u0968 \u0969")  = true
-	 * StringUtils.isNumericSpace("ab2c") = false
-	 * StringUtils.isNumericSpace("12-3") = false
-	 * StringUtils.isNumericSpace("12.3") = false
-	 * </pre>
-	 */
 	public static boolean isNumericSpace(final CharSequence cs) {
 		if (cs == null) {
 			return false;
@@ -178,17 +92,7 @@ public class StringUtil {
 		return true;
 	}
 
-	/**
-	 *
-	 * <pre>
-	 * StringUtils.isWhitespace(null)   = false
-	 * StringUtils.isWhitespace("")     = true
-	 * StringUtils.isWhitespace("  ")   = true
-	 * StringUtils.isWhitespace("abc")  = false
-	 * StringUtils.isWhitespace("ab2c") = false
-	 * StringUtils.isWhitespace("ab-c") = false
-	 * </pre>
-	 */
+
 	public static boolean isWhitespace(final CharSequence cs) {
 		if (cs == null) {
 			return false;
@@ -202,17 +106,6 @@ public class StringUtil {
 		return true;
 	}
 
-	/**
-	 *
-	 * <pre>
-	 * StringUtils.join(null, *)               = null
-	 * StringUtils.join([], *)                 = ""
-	 * StringUtils.join([null], *)             = ""
-	 * StringUtils.join([1, 2, 3], ';')  = "1;2;3"
-	 * StringUtils.join([1, 2, 3], null) = "123"
-	 * </pre>
-	 *
-	 */
 	public static String join(final byte[] array, final char separator) {
 		if (array == null) {
 			return null;
@@ -220,15 +113,7 @@ public class StringUtil {
 		return join(array, separator, 0, array.length);
 	}
 
-	/**
-	 * <pre>
-	 * StringUtils.join(null, *)               = null
-	 * StringUtils.join([], *)                 = ""
-	 * StringUtils.join([null], *)             = ""
-	 * StringUtils.join([1, 2, 3], ';')  = "1;2;3"
-	 * StringUtils.join([1, 2, 3], null) = "123"
-	 * </pre>
-	 */
+
 	public static String join(final byte[] array, final char separator, final int startIndex, final int endIndex) {
 		if (array == null) {
 			return null;
@@ -246,15 +131,7 @@ public class StringUtil {
 		return buf.toString();
 	}
 
-	/**
-	 * <pre>
-	 * StringUtils.join(null, *)               = null
-	 * StringUtils.join([], *)                 = ""
-	 * StringUtils.join([null], *)             = ""
-	 * StringUtils.join([1, 2, 3], ';')  = "1;2;3"
-	 * StringUtils.join([1, 2, 3], null) = "123"
-	 * </pre>
-	 */
+
 	public static String join(final char[] array, final char separator) {
 		if (array == null) {
 			return null;
@@ -262,16 +139,6 @@ public class StringUtil {
 		return join(array, separator, 0, array.length);
 	}
 
-	/**
-	 * <pre>
-	 * StringUtils.join(null, *)               = null
-	 * StringUtils.join([], *)                 = ""
-	 * StringUtils.join([null], *)             = ""
-	 * StringUtils.join([1, 2, 3], ';')  = "1;2;3"
-	 * StringUtils.join([1, 2, 3], null) = "123"
-	 * </pre>
-	 *
-	 */
 	public static String join(final char[] array, final char separator, final int startIndex, final int endIndex) {
 		if (array == null) {
 			return null;
@@ -289,15 +156,7 @@ public class StringUtil {
 		return buf.toString();
 	}
 
-	/**
-	 * <pre>
-	 * StringUtils.join(null, *)               = null
-	 * StringUtils.join([], *)                 = ""
-	 * StringUtils.join([null], *)             = ""
-	 * StringUtils.join([1, 2, 3], ';')  = "1;2;3"
-	 * StringUtils.join([1, 2, 3], null) = "123"
-	 * </pre>
-	 */
+
 	public static String join(final double[] array, final char separator) {
 		if (array == null) {
 			return null;
@@ -305,16 +164,6 @@ public class StringUtil {
 		return join(array, separator, 0, array.length);
 	}
 
-	/**
-
-	 * <pre>
-	 * StringUtils.join(null, *)               = null
-	 * StringUtils.join([], *)                 = ""
-	 * StringUtils.join([null], *)             = ""
-	 * StringUtils.join([1, 2, 3], ';')  = "1;2;3"
-	 * StringUtils.join([1, 2, 3], null) = "123"
-	 * </pre>
-	 */
 	public static String join(final double[] array, final char separator, final int startIndex, final int endIndex) {
 		if (array == null) {
 			return null;
@@ -332,15 +181,7 @@ public class StringUtil {
 		return buf.toString();
 	}
 
-	/**
-	 * <pre>
-	 * StringUtils.join(null, *)               = null
-	 * StringUtils.join([], *)                 = ""
-	 * StringUtils.join([null], *)             = ""
-	 * StringUtils.join([1, 2, 3], ';')  = "1;2;3"
-	 * StringUtils.join([1, 2, 3], null) = "123"
-	 * </pre>
-	 */
+
 	public static String join(final float[] array, final char separator) {
 		if (array == null) {
 			return null;
@@ -348,15 +189,6 @@ public class StringUtil {
 		return join(array, separator, 0, array.length);
 	}
 
-	/**
-	 * <pre>
-	 * StringUtils.join(null, *)               = null
-	 * StringUtils.join([], *)                 = ""
-	 * StringUtils.join([null], *)             = ""
-	 * StringUtils.join([1, 2, 3], ';')  = "1;2;3"
-	 * StringUtils.join([1, 2, 3], null) = "123"
-	 * </pre>
-	 */
 	public static String join(final float[] array, final char separator, final int startIndex, final int endIndex) {
 		if (array == null) {
 			return null;
@@ -374,15 +206,7 @@ public class StringUtil {
 		return buf.toString();
 	}
 
-	/**
-	 * <pre>
-	 * StringUtils.join(null, *)               = null
-	 * StringUtils.join([], *)                 = ""
-	 * StringUtils.join([null], *)             = ""
-	 * StringUtils.join([1, 2, 3], ';')  = "1;2;3"
-	 * StringUtils.join([1, 2, 3], null) = "123"
-	 * </pre>
-	 */
+
 	public static String join(final int[] array, final char separator) {
 		if (array == null) {
 			return null;
@@ -390,15 +214,6 @@ public class StringUtil {
 		return join(array, separator, 0, array.length);
 	}
 
-	/**
-	 * <pre>
-	 * StringUtils.join(null, *)               = null
-	 * StringUtils.join([], *)                 = ""
-	 * StringUtils.join([null], *)             = ""
-	 * StringUtils.join([1, 2, 3], ';')  = "1;2;3"
-	 * StringUtils.join([1, 2, 3], null) = "123"
-	 * </pre>
-	 */
 	public static String join(final int[] array, final char separator, final int startIndex, final int endIndex) {
 		if (array == null) {
 			return null;
@@ -495,16 +310,6 @@ public class StringUtil {
 		return buf.toString();
 	}
 
-	/**
-	 * <pre>
-	 * StringUtils.join(null, *)               = null
-	 * StringUtils.join([], *)                 = ""
-	 * StringUtils.join([null], *)             = ""
-	 * StringUtils.join(["a", "b", "c"], ';')  = "a;b;c"
-	 * StringUtils.join(["a", "b", "c"], null) = "abc"
-	 * StringUtils.join([null, "", "a"], ';')  = ";;a"
-	 * </pre>
-	 */
 	public static String join(final List<?> list, final char separator, final int startIndex, final int endIndex) {
 		if (list == null) {
 			return null;
@@ -517,16 +322,6 @@ public class StringUtil {
 		return join(subList.iterator(), separator);
 	}
 
-	/**
-	 * <pre>
-	 * StringUtils.join(null, *)               = null
-	 * StringUtils.join([], *)                 = ""
-	 * StringUtils.join([null], *)             = ""
-	 * StringUtils.join(["a", "b", "c"], ';')  = "a;b;c"
-	 * StringUtils.join(["a", "b", "c"], null) = "abc"
-	 * StringUtils.join([null, "", "a"], ';')  = ";;a"
-	 * </pre>
-	 */
 	public static String join(final List<?> list, final String separator, final int startIndex, final int endIndex) {
 		if (list == null) {
 			return null;
@@ -540,15 +335,6 @@ public class StringUtil {
 	}
 
 
-	/**
-	 * <pre>
-	 * StringUtils.join(null, *)               = null
-	 * StringUtils.join([], *)                 = ""
-	 * StringUtils.join([null], *)             = ""
-	 * StringUtils.join([1, 2, 3], ';')  = "1;2;3"
-	 * StringUtils.join([1, 2, 3], null) = "123"
-	 * </pre>
-	 */
 	public static String join(final long[] array, final char separator) {
 		if (array == null) {
 			return null;
@@ -556,15 +342,6 @@ public class StringUtil {
 		return join(array, separator, 0, array.length);
 	}
 
-	/**
-	 * <pre>
-	 * StringUtils.join(null, *)               = null
-	 * StringUtils.join([], *)                 = ""
-	 * StringUtils.join([null], *)             = ""
-	 * StringUtils.join([1, 2, 3], ';')  = "1;2;3"
-	 * StringUtils.join([1, 2, 3], null) = "123"
-	 * </pre>
-	 */
 	public static String join(final long[] array, final char separator, final int startIndex, final int endIndex) {
 		if (array == null) {
 			return null;
@@ -582,16 +359,7 @@ public class StringUtil {
 		return buf.toString();
 	}
 
-	/**
-	 * <pre>
-	 * StringUtils.join(null, *)               = null
-	 * StringUtils.join([], *)                 = ""
-	 * StringUtils.join([null], *)             = ""
-	 * StringUtils.join(["a", "b", "c"], ';')  = "a;b;c"
-	 * StringUtils.join(["a", "b", "c"], null) = "abc"
-	 * StringUtils.join([null, "", "a"], ';')  = ";;a"
-	 * </pre>
-	 */
+
 	public static String join(final Object[] array, final char separator) {
 		if (array == null) {
 			return null;
@@ -599,17 +367,6 @@ public class StringUtil {
 		return join(array, separator, 0, array.length);
 	}
 
-	/**
-	 *
-	 * <pre>
-	 * StringUtils.join(null, *)               = null
-	 * StringUtils.join([], *)                 = ""
-	 * StringUtils.join([null], *)             = ""
-	 * StringUtils.join(["a", "b", "c"], ';')  = "a;b;c"
-	 * StringUtils.join(["a", "b", "c"], null) = "abc"
-	 * StringUtils.join([null, "", "a"], ';')  = ";;a"
-	 * </pre>
-	 */
 	public static String join(final Object[] array, final char separator, final int startIndex, final int endIndex) {
 		if (array == null) {
 			return null;
@@ -631,17 +388,6 @@ public class StringUtil {
 		return buf.toString();
 	}
 
-	/**
-	 * <pre>
-	 * StringUtils.join(null, *)                = null
-	 * StringUtils.join([], *)                  = ""
-	 * StringUtils.join([null], *)              = ""
-	 * StringUtils.join(["a", "b", "c"], "--")  = "a--b--c"
-	 * StringUtils.join(["a", "b", "c"], null)  = "abc"
-	 * StringUtils.join(["a", "b", "c"], "")    = "abc"
-	 * StringUtils.join([null, "", "a"], ',')   = ",,a"
-	 * </pre>
-	 */
 	public static String join(final Object[] array, final String separator) {
 		if (array == null) {
 			return null;
@@ -649,20 +395,6 @@ public class StringUtil {
 		return join(array, separator, 0, array.length);
 	}
 
-	/**
-	 * <pre>
-	 * StringUtils.join(null, *, *, *)                = null
-	 * StringUtils.join([], *, *, *)                  = ""
-	 * StringUtils.join([null], *, *, *)              = ""
-	 * StringUtils.join(["a", "b", "c"], "--", 0, 3)  = "a--b--c"
-	 * StringUtils.join(["a", "b", "c"], "--", 1, 3)  = "b--c"
-	 * StringUtils.join(["a", "b", "c"], "--", 2, 3)  = "c"
-	 * StringUtils.join(["a", "b", "c"], "--", 2, 2)  = ""
-	 * StringUtils.join(["a", "b", "c"], null, 0, 3)  = "abc"
-	 * StringUtils.join(["a", "b", "c"], "", 0, 3)    = "abc"
-	 * StringUtils.join([null, "", "a"], ',', 0, 3)   = ",,a"
-	 * </pre>
-	 */
 	public static String join(final Object[] array, String separator, final int startIndex, final int endIndex) {
 		if (array == null) {
 			return null;
@@ -692,16 +424,6 @@ public class StringUtil {
 		return buf.toString();
 	}
 
-	/**
-
-	 * <pre>
-	 * StringUtils.join(null, *)               = null
-	 * StringUtils.join([], *)                 = ""
-	 * StringUtils.join([null], *)             = ""
-	 * StringUtils.join([1, 2, 3], ';')  = "1;2;3"
-	 * StringUtils.join([1, 2, 3], null) = "123"
-	 * </pre>
-	 */
 	public static String join(final short[] array, final char separator) {
 		if (array == null) {
 			return null;
@@ -709,15 +431,6 @@ public class StringUtil {
 		return join(array, separator, 0, array.length);
 	}
 
-	/**
-	 * <pre>
-	 * StringUtils.join(null, *)               = null
-	 * StringUtils.join([], *)                 = ""
-	 * StringUtils.join([null], *)             = ""
-	 * StringUtils.join([1, 2, 3], ';')  = "1;2;3"
-	 * StringUtils.join([1, 2, 3], null) = "123"
-	 * </pre>
-	 */
 	public static String join(final short[] array, final char separator, final int startIndex, final int endIndex) {
 		if (array == null) {
 			return null;

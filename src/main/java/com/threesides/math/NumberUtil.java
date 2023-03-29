@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 public class NumberUtil {
 
 	public static boolean equals(BigDecimal bigNum1, BigDecimal bigNum2) {
-		//noinspection NumberEquality
+		// noinspection NumberEquality
 		if (bigNum1 == bigNum2) {
 			// 如果用户传入同一对象，省略compareTo以提高性能。
 			return true;
