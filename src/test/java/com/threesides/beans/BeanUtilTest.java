@@ -20,7 +20,7 @@ public class BeanUtilTest {
 
 
 	@Test
-	public void copy() {
+	public void copyProperties() {
 
 		User user = new User();
 		user.setUserId(0L);
@@ -39,9 +39,6 @@ public class BeanUtilTest {
 
 		System.out.println("user = " + user);
 		System.out.println("vo = " + vo);
-
-		new HashMap<>();
-		new HashSet<>();
 
 	}
 

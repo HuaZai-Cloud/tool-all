@@ -63,14 +63,4 @@ public class CollectionUtilTest {
 		assertTrue(notEmptyMap);
 	}
 
-	@Test
-	public void testIsEmpty1() {
-		boolean empty = CollectionUtil.isEmpty(new ArrayList<>());
-		System.out.println("empty = " + empty);
-
-	}
-
-	@Test
-	public void testIsEmpty2() {
-	}
 }
