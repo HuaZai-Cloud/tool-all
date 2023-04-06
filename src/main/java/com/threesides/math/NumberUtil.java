@@ -1,8 +1,7 @@
 package com.threesides.math;
 
 
-import cn.hutool.core.lang.Assert;
-import cn.hutool.core.util.StrUtil;
+import com.threesides.Assert;
 import com.threesides.lang.ArrayUtil;
 import com.threesides.lang.StringUtil;
 
@@ -73,7 +72,7 @@ public class NumberUtil {
 	}
 
 	public static BigDecimal add(BigDecimal... values) {
-		if (cn.hutool.core.util.ArrayUtil.isEmpty(values)) {
+		if (ArrayUtil.isEmpty(values)) {
 			return BigDecimal.ZERO;
 		}
 
@@ -142,7 +141,7 @@ public class NumberUtil {
 		BigDecimal result = toBigDecimal(value);
 		for (int i = 1; i < values.length; i++) {
 			value = values[i];
-			if (StrUtil.isNotBlank(value)) {
+			if (StringUtil.isNotBlank(value)) {
 				result = result.subtract(toBigDecimal(value));
 			}
 		}
@@ -353,7 +352,7 @@ public class NumberUtil {
 	}
 
 	public static BigDecimal toBigDecimal(String numberStr) {
-		if (StrUtil.isBlank(numberStr)) {
+		if (StringUtil.isBlank(numberStr)) {
 			return BigDecimal.ZERO;
 		}
 
@@ -373,7 +372,7 @@ public class NumberUtil {
 	}
 
 	public static Number parseNumber(String numberStr) throws NumberFormatException {
-		if (StrUtil.startWithIgnoreCase(numberStr, "0x")) {
+		if (StringUtil.startWithIgnoreCase(numberStr, "0x")) {
 			// 0x04表示16进制数
 			return Long.parseLong(numberStr.substring(2), 16);
 		}

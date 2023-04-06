@@ -15,7 +15,7 @@ import java.util.*;
  */
 public class ObjectUtil {
 
-	private static boolean equals(Object obj1, Object obj2) {
+	public static boolean equals(Object obj1, Object obj2) {
 		if (obj1 instanceof BigDecimal && obj2 instanceof BigDecimal) {
 			return NumberUtil.equals((BigDecimal) obj1, (BigDecimal) obj2);
 		}

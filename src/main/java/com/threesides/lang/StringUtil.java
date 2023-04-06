@@ -1,8 +1,11 @@
 package com.threesides.lang;
 
 
+
+
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -17,6 +20,8 @@ public class StringUtil {
 
 
 	public static final String EMPTY = "";
+
+	public static final String NULL = "null";
 
 	//-----------------------------------------------------------------------
 
@@ -456,5 +461,72 @@ public class StringUtil {
 		return new StringBuilder(noOfItems * 16);
 	}
 
+	public static boolean startWithIgnoreEquals(CharSequence str, CharSequence prefix) {
+		return startWith(str, prefix, false, true);
+	}
+
+	/**
+	 * 是否以指定字符串开头，忽略大小写
+	 *
+	 * @param str    被监测字符串
+	 * @param prefix 开头字符串
+	 * @return 是否以指定字符串开头
+	 */
+	public static boolean startWithIgnoreCase(CharSequence str, CharSequence prefix) {
+		return startWith(str, prefix, true);
+	}
+
+	public static boolean startWith(CharSequence str, CharSequence prefix, boolean ignoreCase) {
+		return startWith(str, prefix, ignoreCase, false);
+	}
+
+	/**
+	 * 是否以指定字符串开头<br>
+	 * 如果给定的字符串和开头字符串都为null则返回true，否则任意一个值为null返回false<br>
+	 * <pre>
+	 *     CharSequenceUtil.startWith("123", "123", false, true);   -- false
+	 *     CharSequenceUtil.startWith("ABCDEF", "abc", true, true); -- true
+	 *     CharSequenceUtil.startWith("abc", "abc", true, true);    -- false
+	 * </pre>
+	 *
+	 * @param str          被监测字符串
+	 * @param prefix       开头字符串
+	 * @param ignoreCase   是否忽略大小写
+	 * @param ignoreEquals 是否忽略字符串相等的情况
+	 * @return 是否以指定字符串开头
+	 * @since 5.4.3
+	 */
+	public static boolean startWith(CharSequence str, CharSequence prefix, boolean ignoreCase, boolean ignoreEquals) {
+		if (null == str || null == prefix) {
+			if (ignoreEquals) {
+				return false;
+			}
+			return null == str && null == prefix;
+		}
+
+		boolean isStartWith = str.toString()
+				.regionMatches(ignoreCase, 0, prefix.toString(), 0, prefix.length());
+
+		if (isStartWith) {
+			return (false == ignoreEquals) || (false == equals(str, prefix, ignoreCase));
+		}
+		return false;
+	}
+	public static boolean equals(CharSequence str1, CharSequence str2, boolean ignoreCase) {
+		if (null == str1) {
+			// 只有两个都为null才判断相等
+			return str2 == null;
+		}
+		if (null == str2) {
+			// 字符串2空，字符串1非空，直接false
+			return false;
+		}
+
+		if (ignoreCase) {
+			return str1.toString().equalsIgnoreCase(str2.toString());
+		} else {
+			return str1.toString().contentEquals(str2);
+		}
+	}
 
 }
