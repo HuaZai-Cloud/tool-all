@@ -23,4 +23,20 @@ public class ArrayUtil {
 		}
 		return true;
 	}
+
+
+	public static boolean isNullElements(Object array){
+		if (isArray(array)) {
+			int len = Array.getLength(array);
+			for(int i = 0; i < len; i++) {
+				if (Array.get(array, i) == null) {
+					return true;
+				}
+			}
+			return false;
+		}
+		return array == null;
+	}
+
+
 }

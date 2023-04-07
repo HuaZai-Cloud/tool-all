@@ -123,11 +123,10 @@ public class Assert {
 
 
 	public static <T extends CharSequence, X extends Throwable> T notContain(CharSequence textToSearch, T substring, Supplier<X> errorSupplier) throws X {
-		if (textToSearch.toString().contains(substring)) {
-
-			return substring;
+		if (!textToSearch.toString().contains(substring)) {
+			throw errorSupplier.get();
 		}
-		return (T) "";
+		return substring;
 	}
 
 
@@ -160,9 +159,9 @@ public class Assert {
 
 
 	public static <T, X extends Throwable> T[] noNullElements(T[] array, Supplier<X> errorSupplier) throws X {
-		// if (ArrayUtil.hasNull(array)) {
-		// 	throw errorSupplier.get();
-		// }
+		if (ArrayUtil.isNullElements(array)) {
+			throw errorSupplier.get();
+		}
 		return array;
 	}
 
@@ -220,7 +219,7 @@ public class Assert {
 
 	public static <T> T isInstanceOf(Class<?> type, T obj, String errorMsgTemplate) throws IllegalArgumentException {
 		notNull(type, "Type to check against must not be null");
-		if (false == type.isInstance(obj)) {
+		if (!type.isInstance(obj)) {
 			throw new IllegalArgumentException(errorMsgTemplate);
 		}
 		return obj;
@@ -241,14 +240,14 @@ public class Assert {
 
 
 	public static void state(boolean expression, Supplier<String> errorMsgSupplier) throws IllegalStateException {
-		if (false == expression) {
+		if (!expression) {
 			throw new IllegalStateException(errorMsgSupplier.get());
 		}
 	}
 
 
 	public static void state(boolean expression, String errorMsgTemplate) throws IllegalStateException {
-		if (false == expression) {
+		if (!expression) {
 			throw new IllegalStateException(errorMsgTemplate);
 		}
 	}
@@ -264,9 +263,9 @@ public class Assert {
 	}
 
 
-	public static int checkIndex(int index, int size, String errorMsgTemplate, Object... params) throws IllegalArgumentException, IndexOutOfBoundsException {
+	public static int checkIndex(int index, int size, String errorMsgTemplate) throws IllegalArgumentException, IndexOutOfBoundsException {
 		if (index < 0 || index >= size) {
-			throw new IndexOutOfBoundsException(badIndexMsg(index, size, errorMsgTemplate, params));
+			throw new IndexOutOfBoundsException(badIndexMsg(index, size, errorMsgTemplate));
 		}
 		return index;
 	}
@@ -376,13 +375,13 @@ public class Assert {
 	}
 
 
-	private static String badIndexMsg(int index, int size, String desc, Object... params) {
+	private static String badIndexMsg(int index, int size, String errorMsgTemplate) {
 		if (index < 0) {
-			return "{} ({}) must not be negative";
+			return " must not be negative";
 		} else if (size < 0) {
 			throw new IllegalArgumentException("negative size: " + size);
 		} else { // index >= size
-			return "{} ({}) must be less than size ({})";
+			return " must be less than size ({})";
 		}
 	}
 }

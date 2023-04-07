@@ -19,4 +19,14 @@ public class ArrayUtilTest {
 	@Test
 	public void isEmpty() {
 	}
+
+	@Test
+	public void isNullElements() {
+		String[] array = new String[3];
+		array[0] = "0";
+		array[1] = "0";
+		array[2]= "";
+		boolean nullElements = ArrayUtil.isNullElements(array);
+		System.out.println("nullElements = " + nullElements);
+	}
 }
