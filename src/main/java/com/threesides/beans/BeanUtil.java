@@ -10,21 +10,43 @@ import java.util.stream.Collectors;
  * @author Di Wu
  * @since 2023-02-27
  */
-
 public class BeanUtil {
 
+	/**
+	 * 拷贝属性值
+	 *
+	 * @param source 来源
+	 * @param target 目标
+	 * @param <S> S
+	 * @param <T> T
+	 *
+	 * @since 2023-04-08
+	 */
 	public static <S,T> void copyProperties(S source, T target ) {
 		if (Objects.isNull(source) || Objects.isNull(target)) {
 			return ;
 		}
 		Class<?> sourceClazz = source.getClass();
 		Class<?> targetClazz = target.getClass();
-		List<Field> sourceFieldList = getFields(sourceClazz);
-		List<Field> targetFieldsList = getFields(targetClazz);
+		List<Field> sourceFieldList = getFieldList(sourceClazz);
+		List<Field> targetFieldsList = getFieldList(targetClazz);
 		copyProperties(source,target, targetClazz, sourceFieldList,targetFieldsList);
 	}
 
 
+	/**
+	 * 拷贝属性值
+	 *
+	 * @param source 来源
+	 * @param target 目标
+	 * @param targetClazz 目标Clazz
+	 * @param sourceFieldList 来源字段集合
+	 * @param targetFieldsList 目标字段集合
+	 * @param <S> S
+	 * @param <T> T
+	 *
+	 * @since 2023-04-08
+	 */
 	private static <S,T> void copyProperties(S source,T target, Class<?> targetClazz, List<Field> sourceFieldList,List<Field> targetFieldsList) {
 
 		try {
@@ -45,16 +67,34 @@ public class BeanUtil {
 		}
 	}
 
-	private static List<Field> getFields(Class<?> c) {
+	/**
+	 * 获取字段集合
+	 *
+	 * @param clazz Class对象
+	 * @return 字段集合
+	 *
+	 * @since 2023-04-08
+	 */
+	private static List<Field> getFieldList(Class<?> clazz) {
 		List<Field> fieldList = new ArrayList<>();
-		Field[] fields = c.getDeclaredFields();
+		Field[] fields = clazz.getDeclaredFields();
 		if (fields.length > 0) {
 			fieldList.addAll(Arrays.asList(fields));
 		}
-		return getSuperClassFields(c, fieldList);
+		return getSuperClassFieldList(clazz, fieldList);
 	}
-	private static List<Field> getSuperClassFields(Class<?> o, List<Field> allFields) {
-		Class<?> superclass = o.getSuperclass();
+
+	/**
+	 * 获取父类字段集合
+	 *
+	 * @param clazz Class对象
+	 * @param allFields 所有字段集合
+	 * @return 字段集合
+	 *
+	 * @since 2023-04-08
+	 */
+	private static List<Field> getSuperClassFieldList(Class<?> clazz, List<Field> allFields) {
+		Class<?> superclass = clazz.getSuperclass();
 		if (Objects.isNull(superclass) || Object.class.getName().equals(superclass.getName())) {
 			return allFields;
 		}
@@ -63,7 +103,7 @@ public class BeanUtil {
 			return allFields;
 		}
 		allFields.addAll(Arrays.asList(fields));
-		return getSuperClassFields(superclass, allFields);
+		return getSuperClassFieldList(superclass, allFields);
 	}
 
 }

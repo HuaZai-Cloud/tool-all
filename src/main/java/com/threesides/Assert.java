@@ -159,7 +159,7 @@ public class Assert {
 
 
 	public static <T, X extends Throwable> T[] noNullElements(T[] array, Supplier<X> errorSupplier) throws X {
-		if (ArrayUtil.isNullElements(array)) {
+		if (ArrayUtil.containsEmptyElements(array)) {
 			throw errorSupplier.get();
 		}
 		return array;
@@ -377,11 +377,11 @@ public class Assert {
 
 	private static String badIndexMsg(int index, int size, String errorMsgTemplate) {
 		if (index < 0) {
-			return " must not be negative";
+			return " must not be negative"+errorMsgTemplate;
 		} else if (size < 0) {
-			throw new IllegalArgumentException("negative size: " + size);
+			throw new IllegalArgumentException("size must not be negative: " + size);
 		} else { // index >= size
-			return " must be less than size ({})";
+			return " must be less than size"+errorMsgTemplate;
 		}
 	}
 }

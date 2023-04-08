@@ -3,10 +3,17 @@ package com.threesides.lang;
 
 
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+
+
+
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static com.threesides.regex.RegexPattern.INTEGER_NUMERIC_PATTERN;
 
 /**
  * StringUtil
@@ -16,15 +23,36 @@ import java.util.Objects;
  */
 public class StringUtil {
 
-	private static final int STRING_BUILDER_SIZE = 256;
+	public static final int STRING_BUILDER_SIZE = 256;
 
 
 	public static final String EMPTY = "";
 
 	public static final String NULL = "null";
 
+	public static final String EMPTY_JSON = "{}";
+
+	public static final char BACKSLASH = '\\';
+
+	public static final char DELIM_START = '{';
+
 	//-----------------------------------------------------------------------
 
+	/**
+	 * 是否是空白
+	 * <p>例：</p>
+	 * <ul>
+	 *     <li>{@code StrUtil.isEmptyIfStr(null)     // true}</li>
+	 *     <li>{@code StrUtil.isEmptyIfStr("")       // true}</li>
+	 *     <li>{@code StrUtil.isEmptyIfStr(" ")      // true}</li>
+	 *     <li>{@code StrUtil.isEmptyIfStr("abc")    // false}</li>
+	 * </ul>
+	 *
+	 * @param cs cs
+	 * @return true:是 、false:不是
+	 *
+	 * @since 2023-04-08
+	 */
 	public static boolean isBlank(final CharSequence cs) {
 		final int strLen = length(cs);
 		if (strLen == 0) {
@@ -38,6 +66,21 @@ public class StringUtil {
 		return true;
 	}
 
+	/**
+	 * 是否是空
+	 * <p>例：</p>
+	 * <ul>
+	 *     <li>{@code StrUtil.isEmptyIfStr(null)     // true}</li>
+	 *     <li>{@code StrUtil.isEmptyIfStr("")       // true}</li>
+	 *     <li>{@code StrUtil.isEmptyIfStr(" ")      // false}</li>
+	 *     <li>{@code StrUtil.isEmptyIfStr("abc")    // false}</li>
+	 * </ul>
+	 *
+	 * @param cs cs
+	 * @return true:是 、false:不是
+	 *
+	 * @since 2023-04-08
+	 */
 	public static boolean isEmpty(final CharSequence cs) {
 		return cs == null || cs.length() == 0;
 	}
@@ -71,7 +114,7 @@ public class StringUtil {
 	}
 
 
-	public static boolean isNumeric(final CharSequence cs) {
+	public static boolean isPureNumeric(final CharSequence cs) {
 		if (isEmpty(cs)) {
 			return false;
 		}
@@ -84,17 +127,26 @@ public class StringUtil {
 		return true;
 	}
 
-	public static boolean isNumericSpace(final CharSequence cs) {
+	public static boolean isIntegerNumeric(final CharSequence cs) {
+		if (isEmpty(cs)) {
+			return false;
+		}
+		Pattern pattern = Pattern.compile(INTEGER_NUMERIC_PATTERN);
+		Matcher matcher = pattern.matcher(cs);
+		return matcher.matches();
+	}
+
+	public static boolean containsWhitespace(final CharSequence cs) {
 		if (cs == null) {
 			return false;
 		}
 		final int sz = cs.length();
 		for (int i = 0; i < sz; i++) {
-			if (!Character.isDigit(cs.charAt(i)) && cs.charAt(i) != ' ') {
-				return false;
+			if (Character.isWhitespace(cs.charAt(i))) {
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 
 
@@ -111,15 +163,110 @@ public class StringUtil {
 		return true;
 	}
 
-	public static String join(final byte[] array, final char separator) {
+
+	public static String join(final Object obj, final String separator) {
+		if (obj == null) {
+			return null;
+		}
+		return join( obj,separator,0, ObjectUtil.length(obj));
+	}
+
+	public static String join(final Object obj, final String separator, final int startIndex, final int endIndex) {
+		if (obj == null) {
+			return null;
+		}
+		if (obj instanceof long[]) {
+			return join((long[]) obj,separator,startIndex, endIndex);
+		} else if (obj instanceof int[]) {
+			return join((int[]) obj,separator,startIndex, endIndex);
+		} else if (obj instanceof short[]) {
+			return join((short[]) obj,separator,startIndex, endIndex);
+		} else if (obj instanceof char[]) {
+			return join((char[]) obj,separator,startIndex, endIndex);
+		} else if (obj instanceof byte[]) {
+			return join((byte[]) obj,separator,startIndex, endIndex);
+		} else if (obj instanceof boolean[]) {
+			return join((boolean[]) obj,separator,startIndex, endIndex);
+		} else if (obj instanceof float[]) {
+			return join((float[]) obj,separator,startIndex, endIndex);
+		} else if (obj instanceof double[]) {
+			return join((double[]) obj,separator,startIndex, endIndex);
+		} else if (ArrayUtil.isArray(obj)) {
+			return join((Object[]) obj, separator, startIndex, endIndex);
+		} else if (obj instanceof Collection) {
+			return join((Collection) obj, separator, startIndex, endIndex);
+		}
+		return join((Object[]) obj,separator,startIndex, endIndex);
+	}
+
+	public static String join(final long[] array, final String separator, final int startIndex, final int endIndex) {
 		if (array == null) {
 			return null;
 		}
-		return join(array, separator, 0, array.length);
+		final int noOfItems = endIndex - startIndex;
+		if (noOfItems <= 0) {
+			return EMPTY;
+		}
+		final StringBuilder buf = newStringBuilder(noOfItems);
+		buf.append(array[startIndex]);
+		for (int i = startIndex + 1; i < endIndex; i++) {
+			buf.append(separator);
+			buf.append(array[i]);
+		}
+		return buf.toString();
 	}
 
+	public static String join(final int[] array, final String separator, final int startIndex, final int endIndex) {
+		if (ArrayUtil.isEmpty(array)) {
+			return null;
+		}
+		final int noOfItems = endIndex - startIndex;
+		if (noOfItems <= 0) {
+			return EMPTY;
+		}
+		final StringBuilder buf = newStringBuilder(noOfItems);
+		buf.append(array[startIndex]);
+		for (int i = startIndex + 1; i < endIndex; i++) {
+			buf.append(separator);
+			buf.append(array[i]);
+		}
+		return buf.toString();
+	}
 
-	public static String join(final byte[] array, final char separator, final int startIndex, final int endIndex) {
+	public static String join(final short[] array, final String separator, final int startIndex, final int endIndex) {
+		if (ArrayUtil.isEmpty(array)) {
+			return null;
+		}
+		final int noOfItems = endIndex - startIndex;
+		if (noOfItems <= 0) {
+			return EMPTY;
+		}
+		final StringBuilder buf = newStringBuilder(noOfItems);
+		buf.append(array[startIndex]);
+		for (int i = startIndex + 1; i < endIndex; i++) {
+			buf.append(separator);
+			buf.append(array[i]);
+		}
+		return buf.toString();
+	}
+	public static String join(final char[] array, final String separator, final int startIndex, final int endIndex) {
+		if (array == null) {
+			return null;
+		}
+		final int noOfItems = endIndex - startIndex;
+		if (noOfItems <= 0) {
+			return EMPTY;
+		}
+		final StringBuilder buf = newStringBuilder(noOfItems);
+		buf.append(array[startIndex]);
+		for (int i = startIndex + 1; i < endIndex; i++) {
+			buf.append(separator);
+			buf.append(array[i]);
+		}
+		return buf.toString();
+	}
+
+	public static String join(final byte[] array, final String separator, final int startIndex, final int endIndex) {
 		if (array == null) {
 			return null;
 		}
@@ -137,14 +284,9 @@ public class StringUtil {
 	}
 
 
-	public static String join(final char[] array, final char separator) {
-		if (array == null) {
-			return null;
-		}
-		return join(array, separator, 0, array.length);
-	}
 
-	public static String join(final char[] array, final char separator, final int startIndex, final int endIndex) {
+	public static String join(final boolean[] array, final String separator, final int startIndex, final int endIndex) {
+
 		if (array == null) {
 			return null;
 		}
@@ -161,15 +303,7 @@ public class StringUtil {
 		return buf.toString();
 	}
 
-
-	public static String join(final double[] array, final char separator) {
-		if (array == null) {
-			return null;
-		}
-		return join(array, separator, 0, array.length);
-	}
-
-	public static String join(final double[] array, final char separator, final int startIndex, final int endIndex) {
+	public static String join(final float[] array, final String separator, final int startIndex, final int endIndex) {
 		if (array == null) {
 			return null;
 		}
@@ -186,15 +320,7 @@ public class StringUtil {
 		return buf.toString();
 	}
 
-
-	public static String join(final float[] array, final char separator) {
-		if (array == null) {
-			return null;
-		}
-		return join(array, separator, 0, array.length);
-	}
-
-	public static String join(final float[] array, final char separator, final int startIndex, final int endIndex) {
+	public static String join(final double[] array, final String separator, final int startIndex, final int endIndex) {
 		if (array == null) {
 			return null;
 		}
@@ -211,15 +337,7 @@ public class StringUtil {
 		return buf.toString();
 	}
 
-
-	public static String join(final int[] array, final char separator) {
-		if (array == null) {
-			return null;
-		}
-		return join(array, separator, 0, array.length);
-	}
-
-	public static String join(final int[] array, final char separator, final int startIndex, final int endIndex) {
+	public static String join(final Object[] array, final String separator, final int startIndex, final int endIndex) {
 		if (array == null) {
 			return null;
 		}
@@ -228,33 +346,32 @@ public class StringUtil {
 			return EMPTY;
 		}
 		final StringBuilder buf = newStringBuilder(noOfItems);
-		buf.append(array[startIndex]);
+		if (array[startIndex] != null) {
+			buf.append(array[startIndex]);
+		}
 		for (int i = startIndex + 1; i < endIndex; i++) {
 			buf.append(separator);
-			buf.append(array[i]);
+			if (array[i] != null) {
+				buf.append(array[i]);
+			}
 		}
 		return buf.toString();
 	}
 
 
-	public static String join(final Iterable<?> iterable, final char separator) {
-		if (iterable == null) {
+	public static String join(final Collection<?> collection, final String separator, final int startIndex, final int endIndex) {
+		if (collection == null) {
 			return null;
 		}
-		return join(iterable.iterator(), separator);
-	}
-
-
-	public static String join(final Iterable<?> iterable, final String separator) {
-		if (iterable == null) {
-			return null;
+		final int noOfItems = endIndex - startIndex;
+		if (noOfItems <= 0) {
+			return EMPTY;
 		}
-		return join(iterable.iterator(), separator);
+		return join(collection.iterator(), separator);
 	}
 
-	public static String join(final Iterator<?> iterator, final char separator) {
+	private static String join(final Iterator<?> iterator, final String separator) {
 
-		// handle null, zero and one elements before building a buffer
 		if (iterator == null) {
 			return null;
 		}
@@ -266,8 +383,8 @@ public class StringUtil {
 			return Objects.toString(first, EMPTY);
 		}
 
-		// two or more elements
-		final StringBuilder buf = new StringBuilder(STRING_BUILDER_SIZE); // Java default is 16, probably too small
+
+		final StringBuilder buf = new StringBuilder(STRING_BUILDER_SIZE);
 		if (first != null) {
 			buf.append(first);
 		}
@@ -283,175 +400,6 @@ public class StringUtil {
 		return buf.toString();
 	}
 
-	public static String join(final Iterator<?> iterator, final String separator) {
-
-		// handle null, zero and one elements before building a buffer
-		if (iterator == null) {
-			return null;
-		}
-		if (!iterator.hasNext()) {
-			return EMPTY;
-		}
-		final Object first = iterator.next();
-		if (!iterator.hasNext()) {
-			return Objects.toString(first, "");
-		}
-
-		// two or more elements
-		final StringBuilder buf = new StringBuilder(STRING_BUILDER_SIZE); // Java default is 16, probably too small
-		if (first != null) {
-			buf.append(first);
-		}
-
-		while (iterator.hasNext()) {
-			if (separator != null) {
-				buf.append(separator);
-			}
-			final Object obj = iterator.next();
-			if (obj != null) {
-				buf.append(obj);
-			}
-		}
-		return buf.toString();
-	}
-
-	public static String join(final List<?> list, final char separator, final int startIndex, final int endIndex) {
-		if (list == null) {
-			return null;
-		}
-		final int noOfItems = endIndex - startIndex;
-		if (noOfItems <= 0) {
-			return EMPTY;
-		}
-		final List<?> subList = list.subList(startIndex, endIndex);
-		return join(subList.iterator(), separator);
-	}
-
-	public static String join(final List<?> list, final String separator, final int startIndex, final int endIndex) {
-		if (list == null) {
-			return null;
-		}
-		final int noOfItems = endIndex - startIndex;
-		if (noOfItems <= 0) {
-			return EMPTY;
-		}
-		final List<?> subList = list.subList(startIndex, endIndex);
-		return join(subList.iterator(), separator);
-	}
-
-
-	public static String join(final long[] array, final char separator) {
-		if (array == null) {
-			return null;
-		}
-		return join(array, separator, 0, array.length);
-	}
-
-	public static String join(final long[] array, final char separator, final int startIndex, final int endIndex) {
-		if (array == null) {
-			return null;
-		}
-		final int noOfItems = endIndex - startIndex;
-		if (noOfItems <= 0) {
-			return EMPTY;
-		}
-		final StringBuilder buf = newStringBuilder(noOfItems);
-		buf.append(array[startIndex]);
-		for (int i = startIndex + 1; i < endIndex; i++) {
-			buf.append(separator);
-			buf.append(array[i]);
-		}
-		return buf.toString();
-	}
-
-
-	public static String join(final Object[] array, final char separator) {
-		if (array == null) {
-			return null;
-		}
-		return join(array, separator, 0, array.length);
-	}
-
-	public static String join(final Object[] array, final char separator, final int startIndex, final int endIndex) {
-		if (array == null) {
-			return null;
-		}
-		final int noOfItems = endIndex - startIndex;
-		if (noOfItems <= 0) {
-			return EMPTY;
-		}
-		final StringBuilder buf = newStringBuilder(noOfItems);
-		if (array[startIndex] != null) {
-			buf.append(array[startIndex]);
-		}
-		for (int i = startIndex + 1; i < endIndex; i++) {
-			buf.append(separator);
-			if (array[i] != null) {
-				buf.append(array[i]);
-			}
-		}
-		return buf.toString();
-	}
-
-	public static String join(final Object[] array, final String separator) {
-		if (array == null) {
-			return null;
-		}
-		return join(array, separator, 0, array.length);
-	}
-
-	public static String join(final Object[] array, String separator, final int startIndex, final int endIndex) {
-		if (array == null) {
-			return null;
-		}
-		if (separator == null) {
-			separator = EMPTY;
-		}
-
-		final int noOfItems = endIndex - startIndex;
-		if (noOfItems <= 0) {
-			return EMPTY;
-		}
-
-		final StringBuilder buf = newStringBuilder(noOfItems);
-
-		if (array[startIndex] != null) {
-			buf.append(array[startIndex]);
-		}
-
-		for (int i = startIndex + 1; i < endIndex; i++) {
-			buf.append(separator);
-
-			if (array[i] != null) {
-				buf.append(array[i]);
-			}
-		}
-		return buf.toString();
-	}
-
-	public static String join(final short[] array, final char separator) {
-		if (array == null) {
-			return null;
-		}
-		return join(array, separator, 0, array.length);
-	}
-
-	public static String join(final short[] array, final char separator, final int startIndex, final int endIndex) {
-		if (array == null) {
-			return null;
-		}
-		final int noOfItems = endIndex - startIndex;
-		if (noOfItems <= 0) {
-			return EMPTY;
-		}
-		final StringBuilder buf = newStringBuilder(noOfItems);
-		buf.append(array[startIndex]);
-		for (int i = startIndex + 1; i < endIndex; i++) {
-			buf.append(separator);
-			buf.append(array[i]);
-		}
-		return buf.toString();
-	}
 
 	public static int length(final CharSequence cs) {
 		return cs == null ? 0 : cs.length();
@@ -465,13 +413,7 @@ public class StringUtil {
 		return startWith(str, prefix, false, true);
 	}
 
-	/**
-	 * 是否以指定字符串开头，忽略大小写
-	 *
-	 * @param str    被监测字符串
-	 * @param prefix 开头字符串
-	 * @return 是否以指定字符串开头
-	 */
+
 	public static boolean startWithIgnoreCase(CharSequence str, CharSequence prefix) {
 		return startWith(str, prefix, true);
 	}
@@ -480,22 +422,7 @@ public class StringUtil {
 		return startWith(str, prefix, ignoreCase, false);
 	}
 
-	/**
-	 * 是否以指定字符串开头<br>
-	 * 如果给定的字符串和开头字符串都为null则返回true，否则任意一个值为null返回false<br>
-	 * <pre>
-	 *     CharSequenceUtil.startWith("123", "123", false, true);   -- false
-	 *     CharSequenceUtil.startWith("ABCDEF", "abc", true, true); -- true
-	 *     CharSequenceUtil.startWith("abc", "abc", true, true);    -- false
-	 * </pre>
-	 *
-	 * @param str          被监测字符串
-	 * @param prefix       开头字符串
-	 * @param ignoreCase   是否忽略大小写
-	 * @param ignoreEquals 是否忽略字符串相等的情况
-	 * @return 是否以指定字符串开头
-	 * @since 5.4.3
-	 */
+
 	public static boolean startWith(CharSequence str, CharSequence prefix, boolean ignoreCase, boolean ignoreEquals) {
 		if (null == str || null == prefix) {
 			if (ignoreEquals) {
@@ -508,9 +435,13 @@ public class StringUtil {
 				.regionMatches(ignoreCase, 0, prefix.toString(), 0, prefix.length());
 
 		if (isStartWith) {
-			return (false == ignoreEquals) || (false == equals(str, prefix, ignoreCase));
+			return (!ignoreEquals) || (!equals(str, prefix, ignoreCase));
 		}
 		return false;
+	}
+
+	public static boolean equals(String obj1, String obj2) {
+		return equals(obj1, obj2, false);
 	}
 	public static boolean equals(CharSequence str1, CharSequence str2, boolean ignoreCase) {
 		if (null == str1) {
@@ -527,6 +458,104 @@ public class StringUtil {
 		} else {
 			return str1.toString().contentEquals(str2);
 		}
+	}
+
+	public static String format(final String strPattern, final Object... argArray) {
+		if (StringUtil.isBlank(strPattern) || ArrayUtil.isEmpty(argArray)) {
+			return strPattern;
+		}
+		final int strPatternLength = strPattern.length();
+
+		StringBuilder sbuf = new StringBuilder(strPatternLength + 50);
+
+		int handledPosition = 0;// 记录已经处理到的位置
+		int delimIndex;// 占位符所在位置
+		for (int argIndex = 0; argIndex < argArray.length; argIndex++) {
+			delimIndex = strPattern.indexOf(EMPTY_JSON, handledPosition);
+			if (delimIndex == -1) {// 剩余部分无占位符
+				if (handledPosition == 0) { // 不带占位符的模板直接返回
+					return strPattern;
+				}
+				// 字符串模板剩余部分不再包含占位符，加入剩余部分后返回结果
+				sbuf.append(strPattern, handledPosition, strPatternLength);
+				return sbuf.toString();
+			}
+
+			// 转义符
+			if (delimIndex > 0 && strPattern.charAt(delimIndex - 1) == BACKSLASH) {// 转义符
+				if (delimIndex > 1 && strPattern.charAt(delimIndex - 2) == BACKSLASH) {// 双转义符
+					// 转义符之前还有一个转义符，占位符依旧有效
+					sbuf.append(strPattern, handledPosition, delimIndex - 1);
+					sbuf.append(objectToUFTF8String(argArray[argIndex]));
+					handledPosition = delimIndex + 2;
+				} else {
+					// 占位符被转义
+					argIndex--;
+					sbuf.append(strPattern, handledPosition, delimIndex - 1);
+					sbuf.append(DELIM_START);
+					handledPosition = delimIndex + 1;
+				}
+			} else {// 正常占位符
+				sbuf.append(strPattern, handledPosition, delimIndex);
+				sbuf.append(objectToUFTF8String(argArray[argIndex]));
+				handledPosition = delimIndex + 2;
+			}
+		}
+
+		// append the characters following the last {} pair.
+		// 加入最后一个占位符后所有的字符
+		sbuf.append(strPattern, handledPosition, strPattern.length());
+
+		return sbuf.toString();
+	}
+
+	public static String objectToUFTF8String(Object obj) {
+		return objectToString(obj, StandardCharsets.UTF_8);
+	}
+	public static String objectToString(Object obj, Charset charset) {
+		if (null == obj) {
+			return null;
+		}
+		if (obj instanceof String) {
+			return (String) obj;
+		} else if (ArrayUtil.isArray(obj)) {
+			return ArrayUtil.toString(obj);
+		}
+
+		return obj.toString();
+	}
+
+	public static String objectToString(ByteBuffer data, Charset charset) {
+		if (null == charset) {
+			charset = Charset.defaultCharset();
+		}
+		return charset.decode(data).toString();
+	}
+
+	public static String objectToString(Byte[] data, Charset charset) {
+		if (data == null) {
+			return null;
+		}
+
+		byte[] bytes = new byte[data.length];
+		Byte dataByte;
+		for (int i = 0; i < data.length; i++) {
+			dataByte = data[i];
+			bytes[i] = (null == dataByte) ? -1 : dataByte;
+		}
+
+		return objectToString(bytes, charset);
+	}
+
+	public static String objectToString(byte[] data, Charset charset) {
+		if (data == null) {
+			return null;
+		}
+
+		if (null == charset) {
+			return new String(data);
+		}
+		return new String(data, charset);
 	}
 
 }

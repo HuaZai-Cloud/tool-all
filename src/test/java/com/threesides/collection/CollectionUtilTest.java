@@ -63,4 +63,15 @@ public class CollectionUtilTest {
 		assertTrue(notEmptyMap);
 	}
 
+	@Test
+	public void testToString() {
+
+		HashMap<String, String> map = new HashMap<>();
+		map.put("1", "1");
+		map.put("2", "2");
+		map.put("3", "3");
+		map.put("4", "4");
+		String s = CollectionUtil.toString(map);
+		System.out.println("s = " + s);
+	}
 }

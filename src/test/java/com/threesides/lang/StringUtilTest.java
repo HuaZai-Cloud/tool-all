@@ -2,6 +2,9 @@ package com.threesides.lang;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+
 import static org.junit.Assert.*;
 
 /**
@@ -142,5 +145,47 @@ public class StringUtilTest {
 
 	@Test
 	public void length() {
+	}
+
+	@Test
+	public void isIntegerNumeric() {
+		System.out.println("StringUtil.isIntegerNumeric(\"-10\") = " + StringUtil.isIntegerNumeric("-10"));
+		System.out.println("StringUtil.isIntegerNumeric(\"+2\") = " + StringUtil.isIntegerNumeric("+2"));
+		System.out.println("StringUtil.isIntegerNumeric(\"3\") = " + StringUtil.isIntegerNumeric("3 "));
+		System.out.println("StringUtil.isIntegerNumeric(\"-10.5\") = " + StringUtil.isIntegerNumeric("-10.5"));
+		System.out.println("StringUtil.isIntegerNumeric(\"10.0\") = " + StringUtil.isIntegerNumeric("10.0"));
+		System.out.println("StringUtil.isIntegerNumeric(\"0\") = " + StringUtil.isIntegerNumeric("0"));
+	}
+
+	@Test
+	public void testJoin23() {
+
+		Object[] args = new Integer[3];
+		int[] result = {1, 2, 3};
+		args[0] = 1;
+		args[1] = 2;
+		args[2] = 3;
+		ArrayList<String> arrayList = new ArrayList<>();
+		arrayList.add("w");
+		arrayList.add("3");
+		arrayList.add("dewjkf");
+		arrayList.add("fwqgt");
+
+		ArrayList<Boolean> booList = new ArrayList<>();
+		booList.add(true);
+		booList.add(true);
+		booList.add(false);
+		booList.add(true);
+		booList.add(false);
+
+
+		boolean[] booleans = {true, false, true};
+
+		HashSet<String> set = new HashSet<>();
+		set.add("ssss");
+		set.add("aaaa");
+		set.add("bbbb");
+
+		System.out.println("StringUtil.join(args, \",\") = " + StringUtil.join(set, ","));
 	}
 }

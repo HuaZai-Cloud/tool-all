@@ -1,6 +1,7 @@
 package com.threesides.date;
 
 
+import com.threesides.lang.StringUtil;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -880,5 +881,7 @@ public class DateTimeUtilTest {
 		Integer secondTimestamp = DateTimeUtil.getSecondTimestamp(calendar);
 		int assertSecondTimestamp = 1679367600;
 		Assert.assertEquals(Long.valueOf(assertSecondTimestamp),Long.valueOf(secondTimestamp));
+
+
 	}
 }

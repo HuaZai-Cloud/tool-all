@@ -2,8 +2,6 @@ package com.threesides.lang;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 /**
  * ArrayUtilTest
  *
@@ -26,7 +24,7 @@ public class ArrayUtilTest {
 		array[0] = "0";
 		array[1] = "0";
 		array[2]= "";
-		boolean nullElements = ArrayUtil.isNullElements(array);
+		boolean nullElements = ArrayUtil.containsEmptyElements(array);
 		System.out.println("nullElements = " + nullElements);
 	}
 }

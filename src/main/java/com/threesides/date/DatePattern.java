@@ -1,6 +1,7 @@
 package com.threesides.date;
 
 /**
+ * 日期模式
  *
  * @author Di Wu
  */
