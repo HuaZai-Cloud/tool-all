@@ -1,6 +1,7 @@
 package com.threesides.collection;
 
 
+import com.threesides.constant.text.StringTextConstant;
 import com.threesides.lang.StringUtil;
 
 import java.util.*;
@@ -85,6 +86,14 @@ public class CollectionUtil {
 		return null == iterator || !iterator.hasNext();
 	}
 
+	/**
+	 *
+	 *
+	 * @param collection
+	 * @return
+	 *
+	 * @since 2023-04-09
+	 */
 	public static String toString(final Collection<?> collection) {
 		return join(collection,",",0,collection.size());
 	}
@@ -123,7 +132,7 @@ public class CollectionUtil {
 		}
 		final int noOfItems = endIndex - startIndex;
 		if (noOfItems <= 0) {
-			return StringUtil.EMPTY;
+			return StringTextConstant.EMPTY;
 		}
 		return join(collection.iterator(), separator);
 	}
@@ -134,11 +143,11 @@ public class CollectionUtil {
 			return null;
 		}
 		if (!iterator.hasNext()) {
-			return StringUtil.EMPTY;
+			return StringTextConstant.EMPTY;
 		}
 		final Object first = iterator.next();
 		if (!iterator.hasNext()) {
-			return Objects.toString(first, StringUtil.EMPTY);
+			return Objects.toString(first, StringTextConstant.EMPTY);
 		}
 
 		final StringBuilder buf = new StringBuilder(StringUtil.STRING_BUILDER_SIZE);

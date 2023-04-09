@@ -1,4 +1,4 @@
-package com.threesides.regex;
+package com.threesides.constant.pattern;
 
 /**
  * RegexKey

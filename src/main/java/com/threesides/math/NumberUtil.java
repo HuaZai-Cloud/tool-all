@@ -1,7 +1,7 @@
 package com.threesides.math;
 
 
-import com.threesides.Assert;
+import com.threesides.exception.Assert;
 import com.threesides.lang.ArrayUtil;
 import com.threesides.lang.StringUtil;
 

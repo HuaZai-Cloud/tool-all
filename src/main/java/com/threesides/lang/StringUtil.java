@@ -6,6 +6,10 @@ package com.threesides.lang;
 
 
 
+import com.threesides.constant.pattern.RegexPattern;
+import com.threesides.constant.text.CharTestConstant;
+import com.threesides.constant.text.StringTextConstant;
+
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -13,7 +17,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.threesides.regex.RegexPattern.INTEGER_NUMERIC_PATTERN;
+
 
 /**
  * StringUtil
@@ -24,17 +28,6 @@ import static com.threesides.regex.RegexPattern.INTEGER_NUMERIC_PATTERN;
 public class StringUtil {
 
 	public static final int STRING_BUILDER_SIZE = 256;
-
-
-	public static final String EMPTY = "";
-
-	public static final String NULL = "null";
-
-	public static final String EMPTY_JSON = "{}";
-
-	public static final char BACKSLASH = '\\';
-
-	public static final char DELIM_START = '{';
 
 	//-----------------------------------------------------------------------
 
@@ -131,7 +124,7 @@ public class StringUtil {
 		if (isEmpty(cs)) {
 			return false;
 		}
-		Pattern pattern = Pattern.compile(INTEGER_NUMERIC_PATTERN);
+		Pattern pattern = Pattern.compile(RegexPattern.INTEGER_NUMERIC_PATTERN);
 		Matcher matcher = pattern.matcher(cs);
 		return matcher.matches();
 	}
@@ -205,7 +198,7 @@ public class StringUtil {
 		}
 		final int noOfItems = endIndex - startIndex;
 		if (noOfItems <= 0) {
-			return EMPTY;
+			return StringTextConstant.EMPTY;
 		}
 		final StringBuilder buf = newStringBuilder(noOfItems);
 		buf.append(array[startIndex]);
@@ -222,7 +215,7 @@ public class StringUtil {
 		}
 		final int noOfItems = endIndex - startIndex;
 		if (noOfItems <= 0) {
-			return EMPTY;
+			return StringTextConstant.EMPTY;
 		}
 		final StringBuilder buf = newStringBuilder(noOfItems);
 		buf.append(array[startIndex]);
@@ -239,7 +232,7 @@ public class StringUtil {
 		}
 		final int noOfItems = endIndex - startIndex;
 		if (noOfItems <= 0) {
-			return EMPTY;
+			return StringTextConstant.EMPTY;
 		}
 		final StringBuilder buf = newStringBuilder(noOfItems);
 		buf.append(array[startIndex]);
@@ -255,7 +248,7 @@ public class StringUtil {
 		}
 		final int noOfItems = endIndex - startIndex;
 		if (noOfItems <= 0) {
-			return EMPTY;
+			return StringTextConstant.EMPTY;
 		}
 		final StringBuilder buf = newStringBuilder(noOfItems);
 		buf.append(array[startIndex]);
@@ -272,7 +265,7 @@ public class StringUtil {
 		}
 		final int noOfItems = endIndex - startIndex;
 		if (noOfItems <= 0) {
-			return EMPTY;
+			return StringTextConstant.EMPTY;
 		}
 		final StringBuilder buf = newStringBuilder(noOfItems);
 		buf.append(array[startIndex]);
@@ -292,7 +285,7 @@ public class StringUtil {
 		}
 		final int noOfItems = endIndex - startIndex;
 		if (noOfItems <= 0) {
-			return EMPTY;
+			return StringTextConstant.EMPTY;
 		}
 		final StringBuilder buf = newStringBuilder(noOfItems);
 		buf.append(array[startIndex]);
@@ -309,7 +302,7 @@ public class StringUtil {
 		}
 		final int noOfItems = endIndex - startIndex;
 		if (noOfItems <= 0) {
-			return EMPTY;
+			return StringTextConstant.EMPTY;
 		}
 		final StringBuilder buf = newStringBuilder(noOfItems);
 		buf.append(array[startIndex]);
@@ -326,7 +319,7 @@ public class StringUtil {
 		}
 		final int noOfItems = endIndex - startIndex;
 		if (noOfItems <= 0) {
-			return EMPTY;
+			return StringTextConstant.EMPTY;
 		}
 		final StringBuilder buf = newStringBuilder(noOfItems);
 		buf.append(array[startIndex]);
@@ -343,7 +336,7 @@ public class StringUtil {
 		}
 		final int noOfItems = endIndex - startIndex;
 		if (noOfItems <= 0) {
-			return EMPTY;
+			return StringTextConstant.EMPTY;
 		}
 		final StringBuilder buf = newStringBuilder(noOfItems);
 		if (array[startIndex] != null) {
@@ -365,7 +358,7 @@ public class StringUtil {
 		}
 		final int noOfItems = endIndex - startIndex;
 		if (noOfItems <= 0) {
-			return EMPTY;
+			return StringTextConstant.EMPTY;
 		}
 		return join(collection.iterator(), separator);
 	}
@@ -376,11 +369,11 @@ public class StringUtil {
 			return null;
 		}
 		if (!iterator.hasNext()) {
-			return EMPTY;
+			return StringTextConstant.EMPTY;
 		}
 		final Object first = iterator.next();
 		if (!iterator.hasNext()) {
-			return Objects.toString(first, EMPTY);
+			return Objects.toString(first, StringTextConstant.EMPTY);
 		}
 
 
@@ -471,7 +464,7 @@ public class StringUtil {
 		int handledPosition = 0;// 记录已经处理到的位置
 		int delimIndex;// 占位符所在位置
 		for (int argIndex = 0; argIndex < argArray.length; argIndex++) {
-			delimIndex = strPattern.indexOf(EMPTY_JSON, handledPosition);
+			delimIndex = strPattern.indexOf(StringTextConstant.EMPTY_JSON, handledPosition);
 			if (delimIndex == -1) {// 剩余部分无占位符
 				if (handledPosition == 0) { // 不带占位符的模板直接返回
 					return strPattern;
@@ -482,8 +475,8 @@ public class StringUtil {
 			}
 
 			// 转义符
-			if (delimIndex > 0 && strPattern.charAt(delimIndex - 1) == BACKSLASH) {// 转义符
-				if (delimIndex > 1 && strPattern.charAt(delimIndex - 2) == BACKSLASH) {// 双转义符
+			if (delimIndex > 0 && strPattern.charAt(delimIndex - 1) == CharTestConstant.BACKSLASH) {// 转义符
+				if (delimIndex > 1 && strPattern.charAt(delimIndex - 2) == CharTestConstant.BACKSLASH) {// 双转义符
 					// 转义符之前还有一个转义符，占位符依旧有效
 					sbuf.append(strPattern, handledPosition, delimIndex - 1);
 					sbuf.append(objectToUFTF8String(argArray[argIndex]));
@@ -492,7 +485,7 @@ public class StringUtil {
 					// 占位符被转义
 					argIndex--;
 					sbuf.append(strPattern, handledPosition, delimIndex - 1);
-					sbuf.append(DELIM_START);
+					sbuf.append(StringTextConstant.DELIM_START);
 					handledPosition = delimIndex + 1;
 				}
 			} else {// 正常占位符

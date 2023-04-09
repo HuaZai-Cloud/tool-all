@@ -1,7 +1,7 @@
 package com.threesides.date;
 
 
-import com.threesides.lang.StringUtil;
+import com.threesides.constant.pattern.DatePattern;
 import org.junit.Assert;
 import org.junit.Test;
 

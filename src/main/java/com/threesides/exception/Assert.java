@@ -1,4 +1,4 @@
-package com.threesides;
+package com.threesides.exception;
 
 
 
