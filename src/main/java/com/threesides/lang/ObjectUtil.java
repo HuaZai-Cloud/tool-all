@@ -5,6 +5,9 @@ import com.threesides.math.NumberUtil;
 
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /**
@@ -216,6 +219,31 @@ public class ObjectUtil {
 	 */
 	public static boolean isNotEmpty(Object obj) {
 		return !isEmpty(obj);
+	}
+
+	public static String objectToUFTF8String(Object obj) {
+		return objectToString(obj, StandardCharsets.UTF_8);
+	}
+	public static String objectToString(Object obj, Charset charset) {
+		if (null == obj) {
+			return null;
+		}
+		if (obj instanceof String) {
+			return (String) obj;
+		} else if (obj instanceof ByteBuffer) {
+			return objectToString((ByteBuffer) obj,charset);
+		} else if (ArrayUtil.isArray(obj)) {
+			return ArrayUtil.toString(obj);
+		}
+
+		return obj.toString();
+	}
+
+	public static String objectToString(ByteBuffer data, Charset charset) {
+		if (null == charset) {
+			charset = Charset.defaultCharset();
+		}
+		return charset.decode(data).toString();
 	}
 
 }
