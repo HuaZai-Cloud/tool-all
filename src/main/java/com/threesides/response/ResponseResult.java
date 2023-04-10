@@ -2,6 +2,7 @@ package com.threesides.response;
 
 
 import com.threesides.beans.BeanEnum;
+import com.threesides.constant.enums.ResponseResultCodeEnum;
 import lombok.Data;
 
 import java.io.Serializable;

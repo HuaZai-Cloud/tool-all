@@ -1,8 +1,7 @@
 package com.threesides.response;
 
+import com.threesides.constant.enums.ResponseResultCodeEnum;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * ResponseResultTest

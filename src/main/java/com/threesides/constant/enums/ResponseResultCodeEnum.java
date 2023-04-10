@@ -1,4 +1,4 @@
-package com.threesides.response;
+package com.threesides.constant.enums;
 
 import com.threesides.beans.BeanEnum;
 
