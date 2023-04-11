@@ -87,31 +87,47 @@ public class CollectionUtil {
 	}
 
 	/**
+	 * 集合转String 逗号分隔
 	 *
-	 *
-	 * @param collection
-	 * @return
+	 * @param collection 集合
+	 * @return String 逗号分隔
 	 *
 	 * @since 2023-04-09
 	 */
 	public static String toString(final Collection<?> collection) {
-		return join(collection,",",0,collection.size());
+		return join(collection,StringTextConstant.COMMA,0,collection.size());
 	}
 
+	/**
+	 * Map转String {Key1:Value1,Key2:Value2}
+	 *
+	 * @param map map
+	 * @return String 逗号分隔
+	 *
+	 * @since 2023-04-11
+	 */
 	public static String toString(final Map<?, ?> map) {
-		String separator = ",";
-		String keyValueSeparator = ":";
-		return join(map, separator, keyValueSeparator);
+		return join(map, StringTextConstant.COMMA, StringTextConstant.COLON);
 	}
 
-	private static String join(Map<?, ?> map, String separator, String keyValueSeparator) {
+	/**
+	 * Map转String {Key1:Value1,Key2:Value2}
+	 *
+	 * @param map map
+	 * @param separator 分隔符 ,
+	 * @param keyValueSeparator key value分隔符 :
+	 * @return String
+	 *
+	 * @since 2023-04-11
+	 */
+	public static String join(Map<?, ?> map, String separator, String keyValueSeparator) {
 		Iterator<? extends Map.Entry<?, ?>> iterator = map.entrySet().iterator();
 
 		if (!iterator.hasNext()) {
-			return "{}";
+			return StringTextConstant.EMPTY_JSON;
 		}
 		StringBuilder sb = new StringBuilder();
-		sb.append('{');
+		sb.append(StringTextConstant.DELIM_START);
 		while (iterator.hasNext()){
 			Map.Entry<?, ?> e = iterator.next();
 			Object key = e.getKey();
@@ -120,12 +136,23 @@ public class CollectionUtil {
 			sb.append(keyValueSeparator);
 			sb.append(value);
 			if (!iterator.hasNext())
-				return sb.append('}').toString();
+				return sb.append(StringTextConstant.DELIM_END).toString();
 			sb.append(separator);
 		}
 		return sb.toString();
 	}
 
+	/**
+	 * 集合转string
+	 *
+	 * @param collection 集合
+	 * @param separator 分隔符
+	 * @param startIndex 开始下标
+	 * @param endIndex 结束下标
+	 * @return string
+	 *
+	 * @since 2023-04-11
+	 */
 	public static String join(final Collection<?> collection, final String separator, final int startIndex, final int endIndex) {
 		if (collection == null) {
 			return null;
