@@ -6,7 +6,7 @@ package com.threesides.constant.text;
  * @author Di Wu
  * @since 2023-04-09
  */
-public class CharTestConstant {
+public class CharTextConstant {
 	public static final	char SPACE = ' ';
 	public static final	char TAB = '\t';
 	public static final	char DOT = '.';

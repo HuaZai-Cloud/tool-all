@@ -1,6 +1,7 @@
 package com.threesides.exception;
 
 import com.threesides.beans.BeanEnum;
+import com.threesides.constant.enums.ResponseResultCodeEnum;
 import com.threesides.lang.ObjectUtil;
 
 /**
@@ -9,20 +10,28 @@ import com.threesides.lang.ObjectUtil;
  * @author Di Wu
  * @since 2023-04-09
  */
-public class BusinessException extends RuntimeException{
-	public BusinessException(String message){
-		super(message);
+public class BusinessException extends BaseException{
+
+	public BusinessException(String errMessage) {
+		super(errMessage, ResponseResultCodeEnum.BUSINESS_ERROR.getKey());
 	}
 
-	public BusinessException(String message, Throwable cause){
-		super(message,cause);
+	public BusinessException(String errMessage, Object errCode) {
+		super(errMessage, errCode);
 	}
 
-	public BusinessException(Throwable cause){
-		super(cause);
+	public BusinessException(String errMessage, Throwable cause) {
+		super(errMessage, cause,ResponseResultCodeEnum.BUSINESS_ERROR.getKey());
 	}
 
-	public BusinessException(BeanEnum beanEnum){
-		super(ObjectUtil.objectToUFTF8String(beanEnum.getValue()));
+	public BusinessException(String errMessage, Throwable cause, Object errCode) {
+		super(errMessage, cause, errCode);
+	}
+
+	public BusinessException(BeanEnum beanEnum) {
+		super(beanEnum.getValue(),  beanEnum.getKey());
+	}
+	public BusinessException(Throwable cause,BeanEnum beanEnum) {
+		super(beanEnum.getValue(), cause, beanEnum.getKey());
 	}
 }

@@ -6,17 +6,13 @@ package com.threesides.lang;
 
 
 
-import com.threesides.constant.pattern.RegexPattern;
-import com.threesides.constant.text.CharTestConstant;
+import com.threesides.constant.text.CharTextConstant;
 import com.threesides.constant.text.StringTextConstant;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 
 
 /**
@@ -508,8 +504,8 @@ public class StringUtil {
 			}
 
 			// 转义符
-			if (delimIndex > 0 && strPattern.charAt(delimIndex - 1) == CharTestConstant.BACKSLASH) {// 转义符
-				if (delimIndex > 1 && strPattern.charAt(delimIndex - 2) == CharTestConstant.BACKSLASH) {// 双转义符
+			if (delimIndex > 0 && strPattern.charAt(delimIndex - 1) == CharTextConstant.BACKSLASH) {// 转义符
+				if (delimIndex > 1 && strPattern.charAt(delimIndex - 2) == CharTextConstant.BACKSLASH) {// 双转义符
 					// 转义符之前还有一个转义符，占位符依旧有效
 					sbuf.append(strPattern, handledPosition, delimIndex - 1);
 					sbuf.append(objectToUFTF8String(argArray[argIndex]));

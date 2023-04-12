@@ -13,7 +13,7 @@ public class ResponseResultTest {
 
 	@Test
 	public void success() {
-		ResponseResult<String> result = ResponseResult.success("我们", ResponseResultCodeEnum.INTER_ERROR);
+		ResponseResult<String> result = ResponseResult.success("我们", ResponseResultCodeEnum.SYSTEM_ERROR);
 		System.out.println("result = " + result);
 	}
 }

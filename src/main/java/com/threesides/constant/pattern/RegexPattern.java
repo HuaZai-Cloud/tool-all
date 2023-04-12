@@ -1,7 +1,7 @@
 package com.threesides.constant.pattern;
 
 /**
- * RegexKey
+ * RegexPattern 正则表达式
  *
  * @author Di Wu
  * @since 2023-04-08

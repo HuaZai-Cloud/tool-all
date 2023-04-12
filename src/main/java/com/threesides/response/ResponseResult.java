@@ -47,7 +47,7 @@ public class  ResponseResult<T> implements Serializable {
 		return result;
 	}
 	public static <T> ResponseResult<T> fail() {
-		return fail(ResponseResultCodeEnum.INTER_ERROR);
+		return fail(ResponseResultCodeEnum.SYSTEM_ERROR);
 	}
 	public static <T> ResponseResult<T> fail(BeanEnum codeEnum) {
 		return fail(null, codeEnum);
