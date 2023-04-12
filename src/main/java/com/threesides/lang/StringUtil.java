@@ -120,13 +120,46 @@ public class StringUtil {
 		return true;
 	}
 
+	// public static boolean isIntegerNumeric(final CharSequence cs) {
+	// 	if (isEmpty(cs)) {
+	// 		return false;
+	// 	}
+	// 	Pattern pattern = Pattern.compile(RegexPattern.INTEGER_NUMERIC_PATTERN);
+	// 	Matcher matcher = pattern.matcher(cs);
+	// 	return matcher.matches();
+	// }
+
 	public static boolean isIntegerNumeric(final CharSequence cs) {
 		if (isEmpty(cs)) {
 			return false;
 		}
-		Pattern pattern = Pattern.compile(RegexPattern.INTEGER_NUMERIC_PATTERN);
-		Matcher matcher = pattern.matcher(cs);
-		return matcher.matches();
+		try {
+			Long.parseLong(cs.toString());
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
+
+	// public static boolean isFloatingNumber(final CharSequence cs) {
+	// 	if (isEmpty(cs)) {
+	// 		return false;
+	// 	}
+	// 	Pattern pattern = Pattern.compile(RegexPattern.FLOATING_NUMBER_PATTERN);
+	// 	Matcher matcher = pattern.matcher(cs);
+	// 	return matcher.matches();
+	// }
+
+	public static boolean isFloatingNumber(final CharSequence cs) {
+		if (isEmpty(cs)) {
+			return false;
+		}
+		try {
+			Double.parseDouble(cs.toString());
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
 	}
 
 	public static boolean containsWhitespace(final CharSequence cs) {

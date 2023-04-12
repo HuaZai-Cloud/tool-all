@@ -152,7 +152,7 @@ public class StringUtilTest {
 		System.out.println("StringUtil.isIntegerNumeric(\"-10\") = " + StringUtil.isIntegerNumeric("-10"));
 		System.out.println("StringUtil.isIntegerNumeric(\"+2\") = " + StringUtil.isIntegerNumeric("+2"));
 		System.out.println("StringUtil.isIntegerNumeric(\"3\") = " + StringUtil.isIntegerNumeric("3 "));
-		System.out.println("StringUtil.isIntegerNumeric(\"-10.5\") = " + StringUtil.isIntegerNumeric("-10.5"));
+		System.out.println("StringUtil.isIntegerNumeric(\"-10.5.5\") = " + StringUtil.isIntegerNumeric("-10"));
 		System.out.println("StringUtil.isIntegerNumeric(\"10.0\") = " + StringUtil.isIntegerNumeric("10.0"));
 		System.out.println("StringUtil.isIntegerNumeric(\"0\") = " + StringUtil.isIntegerNumeric("0"));
 	}

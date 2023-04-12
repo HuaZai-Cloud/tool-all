@@ -36,11 +36,14 @@ public class  ResponseResult<T> implements Serializable {
 	}
 
 	public static <T> ResponseResult<T> success(T data, BeanEnum codeEnum) {
+		return success(data,codeEnum.getKey(),codeEnum.getValue());
+	}
+	public static <T> ResponseResult<T> success(T data, Object statusCode,Object message) {
 		ResponseResult<T> result = new ResponseResult<T>();
 		result.setData(data);
 		result.setSuccess(true);
-		result.setStatusCode(codeEnum.getKey());
-		result.setMessage(codeEnum.getValue());
+		result.setStatusCode(statusCode);
+		result.setMessage(message);
 		return result;
 	}
 	public static <T> ResponseResult<T> fail() {
@@ -51,11 +54,19 @@ public class  ResponseResult<T> implements Serializable {
 	}
 
 	public static <T> ResponseResult<T> fail(T data, BeanEnum codeEnum) {
+		return fail(data,codeEnum.getKey(),codeEnum.getValue());
+	}
+
+	public static <T> ResponseResult<T> fail(Object statusCode,Object message) {
+		return fail(null,statusCode,message);
+	}
+
+	public static <T> ResponseResult<T> fail(T data, Object statusCode,Object message) {
 		ResponseResult<T> result = new ResponseResult<T>();
 		result.setData(data);
 		result.setSuccess(false);
-		result.setStatusCode(codeEnum.getKey());
-		result.setMessage(codeEnum.getValue());
+		result.setStatusCode(statusCode);
+		result.setMessage(message);
 		return result;
 	}
 }
