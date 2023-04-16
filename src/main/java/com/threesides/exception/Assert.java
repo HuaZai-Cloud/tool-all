@@ -22,6 +22,13 @@ public abstract class Assert {
 
 	private static final String TEMPLATE_VALUE_MUST_BE_BETWEEN_AND = "The value must be between {} and {}.";
 
+	/**
+	 * 是True
+	 *
+	 * @param expression 参数
+	 *
+	 * @since 2023-04-16
+	 */
 	public static void isTrue(boolean expression) {
 		isTrue(expression, "[Assertion failed] - this expression must be true");
 	}
