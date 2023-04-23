@@ -563,18 +563,28 @@ public abstract class Assert {
 	}
 
 	/**
+	 * 区间检查
 	 *
-	 *
-	 * @param value
-	 * @param min
-	 * @param max
+	 * @param value 检查值
+	 * @param min 最小值
+	 * @param max 最大值
 	 *
 	 * @since 2023-04-18
 	 */
 	public static void checkBetween(int value, int min, int max) {
-		checkBetween(value, min, max, TEMPLATE_VALUE_MUST_BE_BETWEEN_AND);
+		checkBetween(value, min, max, StringUtil.format(TEMPLATE_VALUE_MUST_BE_BETWEEN_AND,min,max));
 	}
 
+	/**
+	 * 区间检查
+	 *
+	 * @param value 检查值
+	 * @param min 最小值
+	 * @param max 最大值
+	 * @param errorMessage 异常信息
+	 *
+	 * @since 2023-04-23
+	 */
 	public static void checkBetween(int value, int min, int max, String errorMessage) {
 		if (value < min || value > max) {
 			throw new BusinessException(errorMessage);
@@ -583,10 +593,29 @@ public abstract class Assert {
 	}
 
 
+	/**
+	 * 区间检查
+	 *
+	 * @param value 检查值
+	 * @param min 最小值
+	 * @param max 最大值
+	 *
+	 * @since 2023-04-23
+	 */
 	public static void checkBetween(long value, long min, long max) {
-		checkBetween(value, min, max, TEMPLATE_VALUE_MUST_BE_BETWEEN_AND);
+		checkBetween(value, min, max, StringUtil.format(TEMPLATE_VALUE_MUST_BE_BETWEEN_AND,min,max));
 	}
 
+	/**
+	 * 区间检查
+	 *
+	 * @param value 检查值
+	 * @param min 最小值
+	 * @param max 最大值
+	 * @param errorMessage 异常信息
+	 *
+	 * @since 2023-04-23
+	 */
 	public static void  checkBetween(long value, long min, long max, String errorMessage) {
 		if (value < min || value > max) {
 			throw new BusinessException(errorMessage);
@@ -594,10 +623,29 @@ public abstract class Assert {
 	}
 
 
+	/**
+	 * 区间检查
+	 *
+	 * @param value 检查值
+	 * @param min 最小值
+	 * @param max 最大值
+	 *
+	 * @since 2023-04-23
+	 */
 	public static void checkBetween(double value, double min, double max) {
-		checkBetween(value, min, max, TEMPLATE_VALUE_MUST_BE_BETWEEN_AND);
+		checkBetween(value, min, max, StringUtil.format(TEMPLATE_VALUE_MUST_BE_BETWEEN_AND,min,max));
 	}
 
+	/**
+	 * 区间检查
+	 *
+	 * @param value 检查值
+	 * @param min 最小值
+	 * @param max 最大值
+	 * @param errorMessage 异常信息
+	 *
+	 * @since 2023-04-23
+	 */
 	public static void checkBetween(double value, double min, double max, String errorMessage) {
 		if (value < min || value > max) {
 			throw new BusinessException(errorMessage);
@@ -605,8 +653,15 @@ public abstract class Assert {
 	}
 
 
-
-
+	/**
+	 * 区间检查
+	 *
+	 * @param value 检查值
+	 * @param min 最小值
+	 * @param max 最大值
+	 *
+	 * @since 2023-04-23
+	 */
 	public static void checkBetween(Number value, Number min, Number max) {
 		notNull(value);
 		notNull(min);
@@ -615,44 +670,78 @@ public abstract class Assert {
 		double minDouble = min.doubleValue();
 		double maxDouble = max.doubleValue();
 		if (valueDouble < minDouble || valueDouble > maxDouble) {
-			throw new BusinessException(TEMPLATE_VALUE_MUST_BE_BETWEEN_AND);
+			throw new BusinessException(StringUtil.format(TEMPLATE_VALUE_MUST_BE_BETWEEN_AND,min,max));
 		}
 	}
 
 
+	/**
+	 * 不相等
+	 *
+	 * @param obj1 值一
+	 * @param obj2 值二
+	 *
+	 * @since 2023-04-23
+	 */
 	public static void notEquals(Object obj1, Object obj2) {
 		notEquals(obj1, obj2, "({}) must be not equals ({})");
 	}
 
 
-	public static void notEquals(Object obj1, Object obj2, String errorMessage) throws IllegalArgumentException {
-		notEquals(obj1, obj2, () -> new IllegalArgumentException(errorMessage));
-	}
-
-
-	public static <X extends Throwable> void notEquals(Object obj1, Object obj2, Supplier<X> errorSupplier) throws X {
+	/**
+	 * 不相等
+	 *
+	 * @param obj1 值一
+	 * @param obj2 值二
+	 * @param errorMessage 异常信息
+	 *
+	 * @since 2023-04-23
+	 */
+	public static void notEquals(Object obj1, Object obj2, String errorMessage){
 		if (ObjectUtil.equals(obj1, obj2)) {
-			throw errorSupplier.get();
+			throw new BusinessException(StringUtil.format(errorMessage, obj1, obj2));
 		}
 	}
 
+
+	/**
+	 * 相等
+	 *
+	 * @param obj1 值一
+	 * @param obj2 值二
+	 *
+	 * @since 2023-04-23
+	 */
 	public static void equals(Object obj1, Object obj2) {
 		equals(obj1, obj2, "({}) must be equals ({})");
 	}
 
 
-	public static void equals(Object obj1, Object obj2, String errorMessage) throws IllegalArgumentException {
-		equals(obj1, obj2, () -> new BusinessException(errorMessage));
-	}
-
-
-	public static <X extends Throwable> void equals(Object obj1, Object obj2, Supplier<X> errorSupplier) throws X {
+	/**
+	 * 相等
+	 *
+	 * @param obj1 值一
+	 * @param obj2 值二
+	 * @param errorMessage 异常信息
+	 *
+	 * @since 2023-04-23
+	 */
+	public static void equals(Object obj1, Object obj2, String errorMessage){
 		if (ObjectUtil.notEqual(obj1, obj2)) {
-			throw errorSupplier.get();
+			throw new BusinessException(StringUtil.format(errorMessage, obj1, obj2));
 		}
 	}
 
 
+	/**
+	 * 索引越界异常信息
+	 *
+	 * @param index 索引
+	 * @param size 大小
+	 * @param errorMessage 异常信息
+	 *
+	 * @since 2023-04-23
+	 */
 	private static void badIndexMsg(int index, int size, String errorMessage) {
 		if (index < 0) {
 			throw new BusinessException("index not be negative: "+ errorMessage);
