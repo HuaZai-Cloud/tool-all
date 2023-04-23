@@ -24,7 +24,7 @@ public class ArrayUtil {
 	}
 
 	/**
-	 * 是否是空
+	 * 很空
 	 *
 	 * @param array 对象
 	 * @return true：是、false：不是
