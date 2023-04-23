@@ -1,8 +1,6 @@
 package com.threesides.lang;
 
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.http.HttpRequest;
-import com.sun.tools.javac.util.Assert;
+
 import org.junit.Test;
 
 /**
