@@ -23,6 +23,7 @@ public class CollectionUtil {
 	 * @since 2023-04-08
 	 */
 	public static boolean isEmpty(final Collection<?> collection) {
+
 		return collection == null || collection.isEmpty();
 	}
 
