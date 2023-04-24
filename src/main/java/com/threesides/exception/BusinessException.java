@@ -12,6 +12,11 @@ import com.threesides.lang.ObjectUtil;
  */
 public class BusinessException extends BaseException{
 
+	/**
+	 * 业务异常
+	 *
+	 * @param errMessage 异常信息
+	 */
 	public BusinessException(String errMessage) {
 		super(errMessage, ResponseResultCodeEnum.BUSINESS_ERROR.getKey());
 	}
