@@ -23,6 +23,7 @@ public class NumberUtil {
 	private static final int DEFAULT_DIVIDE_SCALE = 10;
 
 
+
 	public static boolean equals(BigDecimal bigNum1, BigDecimal bigNum2) {
 		// noinspection NumberEquality
 		if (bigNum1 == bigNum2) {
