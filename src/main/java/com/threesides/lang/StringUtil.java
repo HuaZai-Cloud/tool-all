@@ -31,10 +31,10 @@ public class StringUtil {
 	 * 是否是空白
 	 * <p>例：</p>
 	 * <ul>
-	 *     <li>{@code StrUtil.isEmptyIfStr(null)     // true}</li>
-	 *     <li>{@code StrUtil.isEmptyIfStr("")       // true}</li>
-	 *     <li>{@code StrUtil.isEmptyIfStr(" ")      // true}</li>
-	 *     <li>{@code StrUtil.isEmptyIfStr("abc")    // false}</li>
+	 *     <li>{@code StringUtil.isEmptyIfStr(null)     // true}</li>
+	 *     <li>{@code StringUtil.isEmptyIfStr("")       // true}</li>
+	 *     <li>{@code StringUtil.isEmptyIfStr(" ")      // true}</li>
+	 *     <li>{@code StringUtil.isEmptyIfStr("abc")    // false}</li>
 	 * </ul>
 	 *
 	 * @param cs cs
@@ -59,10 +59,10 @@ public class StringUtil {
 	 * 是否是空
 	 * <p>例：</p>
 	 * <ul>
-	 *     <li>{@code StrUtil.isEmptyIfStr(null)     // true}</li>
-	 *     <li>{@code StrUtil.isEmptyIfStr("")       // true}</li>
-	 *     <li>{@code StrUtil.isEmptyIfStr(" ")      // false}</li>
-	 *     <li>{@code StrUtil.isEmptyIfStr("abc")    // false}</li>
+	 *     <li>{@code StringUtil.isEmptyIfStr(null)     // true}</li>
+	 *     <li>{@code StringUtil.isEmptyIfStr("")       // true}</li>
+	 *     <li>{@code StringUtil.isEmptyIfStr(" ")      // false}</li>
+	 *     <li>{@code StringUtil.isEmptyIfStr("abc")    // false}</li>
 	 * </ul>
 	 *
 	 * @param cs cs
@@ -74,15 +74,39 @@ public class StringUtil {
 		return cs == null || cs.length() == 0;
 	}
 
+	/**
+	 * 不是空白
+	 *
+	 * @param cs cs
+	 * @return true 不是空白 false 是空白
+	 *
+	 * @since 2023-04-26
+	 */
 	public static boolean isNotBlank(final CharSequence cs) {
 		return !isBlank(cs);
 	}
 
+	/**
+	 * 不是空
+	 *
+	 * @param cs cs
+	 * @return true 不是空 false 是空
+	 *
+	 * @since 2023-04-26
+	 */
 	public static boolean isNotEmpty(final CharSequence cs) {
 		return !isEmpty(cs);
 	}
 
 
+	/**
+	 * 是混合
+	 *
+	 * @param cs cs
+	 * @return true 是 false 不是
+	 *
+	 * @since 2023-04-26
+	 */
 	public static boolean isMixedCase(final CharSequence cs) {
 		if (isEmpty(cs) || cs.length() == 1) {
 			return false;
@@ -103,6 +127,14 @@ public class StringUtil {
 	}
 
 
+	/**
+	 * 纯数字
+	 *
+	 * @param cs cs
+	 * @return true 是 false 不是
+	 *
+	 * @since 2023-04-26
+	 */
 	public static boolean isPureNumeric(final CharSequence cs) {
 		if (isEmpty(cs)) {
 			return false;
@@ -116,15 +148,15 @@ public class StringUtil {
 		return true;
 	}
 
-	// public static boolean isIntegerNumeric(final CharSequence cs) {
-	// 	if (isEmpty(cs)) {
-	// 		return false;
-	// 	}
-	// 	Pattern pattern = Pattern.compile(RegexPattern.INTEGER_NUMERIC_PATTERN);
-	// 	Matcher matcher = pattern.matcher(cs);
-	// 	return matcher.matches();
-	// }
 
+	/**
+	 * 整数
+	 *
+	 * @param cs cs
+	 * @return true 是 false 不是
+	 *
+	 * @since 2023-04-26
+	 */
 	public static boolean isIntegerNumeric(final CharSequence cs) {
 		if (isEmpty(cs)) {
 			return false;
@@ -137,15 +169,15 @@ public class StringUtil {
 		}
 	}
 
-	// public static boolean isFloatingNumber(final CharSequence cs) {
-	// 	if (isEmpty(cs)) {
-	// 		return false;
-	// 	}
-	// 	Pattern pattern = Pattern.compile(RegexPattern.FLOATING_NUMBER_PATTERN);
-	// 	Matcher matcher = pattern.matcher(cs);
-	// 	return matcher.matches();
-	// }
 
+	/**
+	 * 浮点数
+	 *
+	 * @param cs cs
+	 * @return true 是 false 不是
+	 *
+	 * @since 2023-04-26
+	 */
 	public static boolean isFloatingNumber(final CharSequence cs) {
 		if (isEmpty(cs)) {
 			return false;
@@ -158,6 +190,14 @@ public class StringUtil {
 		}
 	}
 
+	/**
+	 * 包含空格
+	 *
+	 * @param cs cs
+	 * @return true 是 false 不是
+	 *
+	 * @since 2023-04-26
+	 */
 	public static boolean containsWhitespace(final CharSequence cs) {
 		if (cs == null) {
 			return false;
@@ -172,6 +212,14 @@ public class StringUtil {
 	}
 
 
+	/**
+	 * 空格
+	 *
+	 * @param cs cs
+	 * @return true 是 false 不是
+	 *
+	 * @since 2023-04-26
+	 */
 	public static boolean isWhitespace(final CharSequence cs) {
 		if (cs == null) {
 			return false;
@@ -482,6 +530,19 @@ public class StringUtil {
 		}
 	}
 
+	/**
+	 * 占位符替换
+	 *
+	 * <p>例：</p>
+	 * <ul>
+	 *     <li>{@code StringUtil.format("今天吃{},还是吃{}","面","饭")     // 今天吃面,还是吃饭"}</li>
+	 * </ul>
+	 * @param strPattern str
+	 * @param argArray 占位符内容替换
+	 * @return 占位符替换后Str
+	 *
+	 * @since 2023-04-26
+	 */
 	public static String format(final String strPattern, final Object... argArray) {
 		if (StringUtil.isBlank(strPattern) || ArrayUtil.isEmpty(argArray)) {
 			return strPattern;
