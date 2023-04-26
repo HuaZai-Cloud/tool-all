@@ -617,30 +617,5 @@ public class StringUtil {
 		return charset.decode(data).toString();
 	}
 
-	// public static String objectToString(Byte[] data, Charset charset) {
-	// 	if (data == null) {
-	// 		return null;
-	// 	}
-	//
-	// 	byte[] bytes = new byte[data.length];
-	// 	Byte dataByte;
-	// 	for (int i = 0; i < data.length; i++) {
-	// 		dataByte = data[i];
-	// 		bytes[i] = (null == dataByte) ? -1 : dataByte;
-	// 	}
-	//
-	// 	return objectToString(bytes, charset);
-	// }
-	//
-	// public static String objectToString(byte[] data, Charset charset) {
-	// 	if (data == null) {
-	// 		return null;
-	// 	}
-	//
-	// 	if (null == charset) {
-	// 		return new String(data);
-	// 	}
-	// 	return new String(data, charset);
-	// }
 
 }
