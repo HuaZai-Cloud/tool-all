@@ -234,6 +234,15 @@ public class StringUtil {
 	}
 
 
+	/**
+	 * 数组、集合转字符串
+	 *
+	 * @param obj
+	 * @param separator
+	 * @return
+	 *
+	 * @since 2023-04-27
+	 */
 	public static String join(final Object obj, final String separator) {
 		if (obj == null) {
 			return null;
@@ -269,6 +278,17 @@ public class StringUtil {
 		return join((Object[]) obj,separator,startIndex, endIndex);
 	}
 
+	/**
+	 * long数组转字符串
+	 *
+	 * @param array 数组
+	 * @param separator 分隔符
+	 * @param startIndex 开始下标
+	 * @param endIndex 结束下标
+	 * @return 字符串
+	 *
+	 * @since 2023-04-27
+	 */
 	public static String join(final long[] array, final String separator, final int startIndex, final int endIndex) {
 		if (array == null) {
 			return null;
@@ -286,6 +306,17 @@ public class StringUtil {
 		return buf.toString();
 	}
 
+	/**
+	 * int数组转字符串
+	 *
+	 * @param array 数组
+	 * @param separator 分隔符
+	 * @param startIndex 开始下标
+	 * @param endIndex 结束下标
+	 * @return 字符串
+	 *
+	 * @since 2023-04-27
+	 */
 	public static String join(final int[] array, final String separator, final int startIndex, final int endIndex) {
 		if (ArrayUtil.isEmpty(array)) {
 			return null;
@@ -303,6 +334,17 @@ public class StringUtil {
 		return buf.toString();
 	}
 
+	/**
+	 * short数组转字符串
+	 *
+	 * @param array 数组
+	 * @param separator 分隔符
+	 * @param startIndex 开始下标
+	 * @param endIndex 结束下标
+	 * @return 字符串
+	 *
+	 * @since 2023-04-27
+	 */
 	public static String join(final short[] array, final String separator, final int startIndex, final int endIndex) {
 		if (ArrayUtil.isEmpty(array)) {
 			return null;
@@ -319,6 +361,18 @@ public class StringUtil {
 		}
 		return buf.toString();
 	}
+
+	/**
+	 * char数组转字符串
+	 *
+	 * @param array 数组
+	 * @param separator 分隔符
+	 * @param startIndex 开始下标
+	 * @param endIndex 结束下标
+	 * @return 字符串
+	 *
+	 * @since 2023-04-27
+	 */
 	public static String join(final char[] array, final String separator, final int startIndex, final int endIndex) {
 		if (array == null) {
 			return null;
@@ -336,6 +390,17 @@ public class StringUtil {
 		return buf.toString();
 	}
 
+	/**
+	 *
+	 *
+	 * @param array
+	 * @param separator
+	 * @param startIndex
+	 * @param endIndex
+	 * @return
+	 *
+	 * @since 2023-04-27
+	 */
 	public static String join(final byte[] array, final String separator, final int startIndex, final int endIndex) {
 		if (array == null) {
 			return null;
@@ -615,6 +680,15 @@ public class StringUtil {
 			charset = Charset.defaultCharset();
 		}
 		return charset.decode(data).toString();
+	}
+
+
+	public static List<String> splitToList(final String data, final String separator) {
+		return Arrays.asList(splitToArray(data, separator));
+	}
+
+	public static String[] splitToArray(final String data, final String separator) {
+		return data.split(separator);
 	}
 
 

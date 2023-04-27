@@ -221,6 +221,14 @@ public class ObjectUtil {
 		return !isEmpty(obj);
 	}
 
+	/**
+	 *
+	 *
+	 * @param obj
+	 * @return
+	 *
+	 * @since 2023-04-27
+	 */
 	public static String objectToUFTF8String(Object obj) {
 		return objectToString(obj, StandardCharsets.UTF_8);
 	}
@@ -239,6 +247,15 @@ public class ObjectUtil {
 		return obj.toString();
 	}
 
+	/**
+	 * 转字符串
+	 *
+	 * @param data 数据
+	 * @param charset 字符集
+	 * @return 字符串
+	 *
+	 * @since 2023-04-27
+	 */
 	public static String objectToString(ByteBuffer data, Charset charset) {
 		if (null == charset) {
 			charset = Charset.defaultCharset();
