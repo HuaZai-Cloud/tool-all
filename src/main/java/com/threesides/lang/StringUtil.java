@@ -683,10 +683,28 @@ public class StringUtil {
 	}
 
 
+	/**
+	 * 字符串转集合
+	 *
+	 * @param data 数据
+	 * @param separator 分隔符
+	 * @return 集合
+	 *
+	 * @since 2023-04-28
+	 */
 	public static List<String> splitToList(final String data, final String separator) {
 		return Arrays.asList(splitToArray(data, separator));
 	}
 
+	/**
+	 * 字符串转数组
+	 *
+	 * @param data 字符串
+	 * @param separator 分隔符
+	 * @return 数组
+	 *
+	 * @since 2023-04-28
+	 */
 	public static String[] splitToArray(final String data, final String separator) {
 		return data.split(separator);
 	}

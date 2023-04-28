@@ -23,7 +23,15 @@ public class NumberUtil {
 	private static final int DEFAULT_DIVIDE_SCALE = 10;
 
 
-
+	/**
+	 * 是否相等
+	 *
+	 * @param bigNum1 bigNum1
+	 * @param bigNum2 bigNum2
+	 * @return true 相等 false 不想等
+	 *
+	 * @since 2023-04-28
+	 */
 	public static boolean equals(BigDecimal bigNum1, BigDecimal bigNum2) {
 		// noinspection NumberEquality
 		if (bigNum1 == bigNum2) {
@@ -37,25 +45,80 @@ public class NumberUtil {
 	}
 
 	// add ----------------------------------------------------------------
+
+	/**
+	 * 和
+	 *
+	 * @param addend1 加数1
+	 * @param addend2 加数2
+	 * @return 和
+	 *
+	 * @since 2023-04-28
+	 */
 	public static double add(float addend1, float addend2) {
 		return add(Float.toString(addend1), Float.toString(addend2)).doubleValue();
 	}
 
+	/**
+	 * 和
+	 *
+	 * @param addend1 加数1
+	 * @param addend2 加数2
+	 * @return 和
+	 *
+	 * @since 2023-04-28
+	 */
 	public static double add(double addend1, double addend2) {
 		return add(Double.toString(addend1), Double.toString(addend2)).doubleValue();
 	}
+
+	/**
+	 * 和
+	 *
+	 * @param addend1 加数1
+	 * @param addend2 加数2
+	 * @return 和
+	 *
+	 * @since 2023-04-28
+	 */
 	public static double add(float addend1, double addend2) {
 		return add(Float.toString(addend1), Double.toString(addend2)).doubleValue();
 	}
 
+	/**
+	 * 和
+	 *
+	 * @param addend1 加数1
+	 * @param addend2 加数2
+	 * @return 和
+	 *
+	 * @since 2023-04-28
+	 */
 	public static double add(double addend1, float addend2) {
 		return add(Double.toString(addend1), Float.toString(addend2)).doubleValue();
 	}
 
+	/**
+	 * 和
+	 *
+	 * @param addend1 加数1
+	 * @param addend2 加数2
+	 * @return 和
+	 *
+	 * @since 2023-04-28
+	 */
 	public static double add(Double addend1, Double addend2){
 		return add(Double.toString(addend1), Double.toString(addend2)).doubleValue();
 	}
 
+	/**
+	 * 和
+	 *
+	 * @param addends 加数
+	 * @return 和
+	 *
+	 * @since 2023-04-28
+	 */
 	public static BigDecimal add(Number... addends){
 		if (ArrayUtil.isEmpty(addends)) {
 			return BigDecimal.ZERO;
@@ -72,6 +135,14 @@ public class NumberUtil {
 		return result;
 	}
 
+	/**
+	 * 和
+	 *
+	 * @param values 加数
+	 * @return 和
+	 *
+	 * @since 2023-04-28
+	 */
 	public static BigDecimal add(BigDecimal... values) {
 		if (ArrayUtil.isEmpty(values)) {
 			return BigDecimal.ZERO;
@@ -88,6 +159,14 @@ public class NumberUtil {
 		return result;
 	}
 
+	/**
+	 * 和
+	 *
+	 * @param addends 加数
+	 * @return 和
+	 *
+	 * @since 2023-04-28
+	 */
 	public static BigDecimal add(String... addends) {
 
 		if (ArrayUtil.isEmpty(addends)) {
@@ -106,17 +185,54 @@ public class NumberUtil {
 	}
 
 	// subtract ----------------------------------------------------------------
+
+	/**
+	 * 差
+	 *
+	 * @param subtrahend 减数
+	 * @param minuend 被减数
+	 * @return 差
+	 *
+	 * @since 2023-04-28
+	 */
 	public static double subtract(double subtrahend, double minuend) {
 		return subtract(Double.toString(subtrahend), Double.toString(minuend)).doubleValue();
 	}
 
+	/**
+	 * 差
+	 *
+	 * @param subtrahend 减数
+	 * @param minuend 被减数
+	 * @return 差
+	 *
+	 * @since 2023-04-28
+	 */
 	public static double subtract(float subtrahend, float minuend) {
 		return subtract(Float.toString(subtrahend), Float.toString(minuend)).doubleValue();
 	}
+
+	/**
+	 * 差
+	 *
+	 * @param subtrahend 减数
+	 * @param minuend 被减数
+	 * @return 差
+	 *
+	 * @since 2023-04-28
+	 */
 	public static double subtract(double subtrahend, float minuend) {
 		return subtract(Double.toString(subtrahend), Float.toString(minuend)).doubleValue();
 	}
 
+	/**
+	 * 差
+	 *
+	 * @param numbers 减数 被减数
+	 * @return 差
+	 *
+	 * @since 2023-04-28
+	 */
 	public static BigDecimal subtract(Number... numbers) {
 		if (ArrayUtil.isEmpty(numbers)) {
 			return BigDecimal.ZERO;
@@ -133,6 +249,14 @@ public class NumberUtil {
 		return result;
 	}
 
+	/**
+	 * 差
+	 *
+	 * @param values 减数 被减数
+	 * @return 差
+	 *
+	 * @since 2023-04-28
+	 */
 	public static BigDecimal subtract(String... values) {
 		if (ArrayUtil.isEmpty(values)) {
 			return BigDecimal.ZERO;
@@ -150,6 +274,14 @@ public class NumberUtil {
 	}
 
 
+	/**
+	 * 差
+	 *
+	 * @param values 减数 被减数
+	 * @return 差
+	 *
+	 * @since 2023-04-28
+	 */
 	public static BigDecimal subtract(BigDecimal... values) {
 		if (ArrayUtil.isEmpty(values)) {
 			return BigDecimal.ZERO;
