@@ -299,23 +299,68 @@ public class NumberUtil {
 	}
 
 	// 乘 ----------------------------------------------------------------
+
+	/**
+	 * 积
+	 *
+	 * @param multiply1 乘数1
+	 * @param multiply2 乘数2
+	 * @return 积
+	 *
+	 * @since 2023-05-04
+	 */
 	public static double multiply(double multiply1, double multiply2) {
 		return multiply(Double.toString(multiply1), Double.toString(multiply2)).doubleValue();
 	}
 
+	/**
+	 * 积
+	 *
+	 * @param multiply1 乘数1
+	 * @param multiply2 乘数2
+	 * @return 积
+	 *
+	 * @since 2023-05-04
+	 */
 	public static double multiply(float multiply1, float multiply2) {
 		return multiply(Float.toString(multiply1), Float.toString(multiply2)).doubleValue();
 	}
 
+	/**
+	 * 积
+	 *
+	 * @param multiply1 乘数1
+	 * @param multiply2 乘数2
+	 * @return 积
+	 *
+	 * @since 2023-05-04
+	 */
 	public static double multiply(double multiply1, float multiply2) {
 		return multiply(Double.toString(multiply1), Float.toString(multiply2)).doubleValue();
 	}
 
+	/**
+	 * 积
+	 *
+	 * @param multiply1 乘数1
+	 * @param multiply2 乘数2
+	 * @return 积
+	 *
+	 * @since 2023-05-04
+	 */
 	public static double multiply(float multiply1, double multiply2) {
 		return multiply(Float.toString(multiply1), Double.toString(multiply2)).doubleValue();
 	}
 
 
+	/**
+	 * 积
+	 *
+	 * @param values 乘数
+	 * @return 积
+	 *
+	 * @since 2023-05-04
+	 */
 	public static BigDecimal multiply(Number... values) {
 		if (ArrayUtil.isEmpty(values)) {
 			return BigDecimal.ZERO;
@@ -331,7 +376,14 @@ public class NumberUtil {
 	}
 
 
-
+	/**
+	 * 积
+	 *
+	 * @param values 乘数
+	 * @return 积
+	 *
+	 * @since 2023-05-04
+	 */
 	public static BigDecimal multiply(String... values) {
 		if (ArrayUtil.isEmpty(values)) {
 			return BigDecimal.ZERO;
@@ -345,7 +397,14 @@ public class NumberUtil {
 		return result;
 	}
 
-
+	/**
+	 * 积
+	 *
+	 * @param values 乘数
+	 * @return 积
+	 *
+	 * @since 2023-05-04
+	 */
 	public static BigDecimal multiply(BigDecimal... values) {
 		if (ArrayUtil.isEmpty(values) ) {
 			return BigDecimal.ZERO;
