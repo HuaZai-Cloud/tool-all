@@ -500,31 +500,101 @@ public class NumberUtil {
 		return divide(toBigDecimal(v1), toBigDecimal(v2), scale,roundingMode).doubleValue();
 	}
 
+	/**
+	 * 商
+	 *
+	 * @param v1 除数
+	 * @param v2 被除数
+	 * @return 商
+	 *
+	 * @since 2023-05-06
+	 */
 	public static double divide(double v1, float v2) {
 		return divide(toBigDecimal(v1), toBigDecimal(v2)).doubleValue();
 	}
 
+	/**
+	 * 商
+	 *
+	 * @param v1 除数
+	 * @param v2 被除数
+	 * @param scale 保留小数
+	 * @return 商
+	 *
+	 * @since 2023-05-06
+	 */
 	public static double divide(double v1, float v2, int scale) {
 		return divide(v1, v2, scale,RoundingMode.HALF_UP);
 	}
 
+	/**
+	 * 商
+	 *
+	 * @param v1 除数
+	 * @param v2 被除数
+	 * @param scale 保留小数
+	 * @param roundingMode 策略
+	 * @return 商
+	 *
+	 * @since 2023-05-06
+	 */
 	public static double divide(double v1, float v2, int scale,RoundingMode roundingMode) {
 		return divide(toBigDecimal(v1), toBigDecimal(v2), scale,roundingMode).doubleValue();
 	}
 
+	/**
+	 * 商
+	 *
+	 * @param v1 除数
+	 * @param v2 被除数
+	 * @return 商
+	 *
+	 * @since 2023-05-06
+	 */
 	public static double divide(float v1, double v2) {
 		return divide(toBigDecimal(v1), toBigDecimal(v2)).doubleValue();
 	}
 
+	/**
+	 * 商
+	 *
+	 * @param v1 除数
+	 * @param v2 被除数
+	 * @param scale 保留小数
+	 * @return 商
+	 *
+	 * @since 2023-05-06
+	 */
 	public static double divide(float v1, double v2, int scale) {
 		return divide(v1, v2, scale,RoundingMode.HALF_UP);
 	}
 
+	/**
+	 * 商
+	 *
+	 * @param v1 除数
+	 * @param v2 被除数
+	 * @param scale 保留小数
+	 * @param roundingMode 策略
+	 * @return 商
+	 *
+	 * @since 2023-05-06
+	 */
 	public static double divide(float v1, double v2, int scale,RoundingMode roundingMode) {
 		return divide(toBigDecimal(v1), toBigDecimal(v2), scale,roundingMode).doubleValue();
 	}
 
-
+	/**
+	 * 商
+	 *
+	 * @param v1 除数
+	 * @param v2 被除数
+	 * @param scale 保留小数
+	 * @param roundingMode 策略
+	 * @return 商
+	 *
+	 * @since 2023-05-06
+	 */
 	public static BigDecimal divide(BigDecimal v1, BigDecimal v2, int scale, RoundingMode roundingMode) {
 		Assert.notNull(v2, "Divisor must be not null !");
 		if (null == v1) {
@@ -536,6 +606,16 @@ public class NumberUtil {
 		return v1.divide(v2, scale, roundingMode);
 	}
 
+	/**
+	 * 商
+	 *
+	 * @param v1 除数
+	 * @param v2 被除数
+	 * @param roundingMode 策略
+	 * @return 商
+	 *
+	 * @since 2023-05-06
+	 */
 	public static BigDecimal divide(BigDecimal v1, BigDecimal v2, RoundingMode roundingMode) {
 		Assert.notNull(v2, "Divisor must be not null !");
 		if (null == v1) {
@@ -544,6 +624,15 @@ public class NumberUtil {
 		return v1.divide(v2, DEFAULT_DIVIDE_SCALE,  roundingMode);
 	}
 
+	/**
+	 * 商
+	 *
+	 * @param v1 除数
+	 * @param v2 被除数
+	 * @return 商
+	 *
+	 * @since 2023-05-06
+	 */
 	public static BigDecimal divide(BigDecimal v1, BigDecimal v2) {
 		Assert.notNull(v2, "Divisor must be not null !");
 		if (null == v1) {
