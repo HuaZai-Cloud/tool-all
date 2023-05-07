@@ -642,15 +642,43 @@ public class NumberUtil {
 	}
 
 	// rounding ----------------------------------------------------------------
+
+	/**
+	 * 四舍五入
+	 *
+	 * @param number 数字
+	 * @param scale 保留小数
+	 * @return 保留小数后数字
+	 *
+	 * @since 2023-05-07
+	 */
 	public static BigDecimal rounding(BigDecimal number, int scale) {
 		return accuracyFormat(number,scale,RoundingMode.HALF_UP);
 	}
 
+	/**
+	 * 丢弃
+	 *
+	 * @param number 数字
+	 * @param scale 保留小数
+	 * @return 保留小数后数字
+	 *
+	 * @since 2023-05-07
+	 */
 	public static BigDecimal discard(BigDecimal number, int scale) {
 
 		return accuracyFormat(number,scale,RoundingMode.DOWN);
 	}
 
+	/**
+	 * 进一
+	 *
+	 * @param number 数字
+	 * @param scale 保留小数
+	 * @return 保留小数后数字
+	 *
+	 * @since 2023-05-07
+	 */
 	public static BigDecimal advance(BigDecimal number, int scale) {
 		return accuracyFormat(number,scale,RoundingMode.CEILING);
 	}
