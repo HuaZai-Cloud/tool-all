@@ -683,6 +683,16 @@ public class NumberUtil {
 		return accuracyFormat(number,scale,RoundingMode.CEILING);
 	}
 
+	/**
+	 * 格式化
+	 *
+	 * @param number 数字
+	 * @param scale 保留小数
+	 * @param roundingMode 舍入模式
+	 * @return 舍入后数字
+	 *
+	 * @since 2023-05-08
+	 */
 	public static BigDecimal accuracyFormat(BigDecimal number, int scale, RoundingMode roundingMode) {
 		if (null == number) {
 			number = BigDecimal.ZERO;
@@ -698,7 +708,14 @@ public class NumberUtil {
 	}
 
 
-
+	/**
+	 * 转BigDecimal
+	 *
+	 * @param number number
+	 * @return BigDecimal类型数字
+	 *
+	 * @since 2023-05-08
+	 */
 	public static BigDecimal toBigDecimal(Number number) {
 		if (null == number) {
 			return BigDecimal.ZERO;
@@ -718,6 +735,14 @@ public class NumberUtil {
 		return toBigDecimal(number.toString());
 	}
 
+	/**
+	 * 转BigDecimal
+	 *
+	 * @param numberStr 字符串number
+	 * @return BigDecimal类型数字
+	 *
+	 * @since 2023-05-08
+	 */
 	public static BigDecimal toBigDecimal(String numberStr) {
 		if (StringUtil.isBlank(numberStr)) {
 			return BigDecimal.ZERO;
@@ -738,6 +763,15 @@ public class NumberUtil {
 		return new BigDecimal(numberStr);
 	}
 
+	/**
+	 * 解析数字
+	 *
+	 * @param numberStr 字符串数字
+	 * @return 数字
+	 * @throws NumberFormatException 数字格式错误
+	 *
+	 * @since 2023-05-08
+	 */
 	public static Number parseNumber(String numberStr) throws NumberFormatException {
 		if (StringUtil.startWithIgnoreCase(numberStr, "0x")) {
 			// 0x04表示16进制数
