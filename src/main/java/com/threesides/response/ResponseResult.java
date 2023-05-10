@@ -26,18 +26,57 @@ public class  ResponseResult<T> implements Serializable {
 
 	private Object message;
 
+	/**
+	 * 成功
+	 *
+	 * @return 成功信息
+	 * @param <T> T
+	 *
+	 * @since 2023-05-10
+	 */
 	public static <T> ResponseResult<T> success() {
 
 		return success(null);
 	}
 
+	/**
+	 * 成功
+	 *
+	 * @param data data
+	 * @return 成功信息
+	 * @param <T> T
+	 *
+	 * @since 2023-05-10
+	 */
 	public static <T> ResponseResult<T> success(T data) {
 		return success(data, ResponseResultCodeEnum.SUCCESS);
 	}
 
+	/**
+	 * 成功
+	 *
+	 * @param data data
+	 * @param codeEnum codeEnum
+	 * @return 成功信息
+	 * @param <T> T
+	 *
+	 * @since 2023-05-10
+	 */
 	public static <T> ResponseResult<T> success(T data, BeanEnum codeEnum) {
 		return success(data,codeEnum.getKey(),codeEnum.getValue());
 	}
+
+	/**
+	 * 成功
+	 *
+	 * @param data data
+	 * @param statusCode 状态
+	 * @param message 消息
+	 * @return 成功信息
+	 * @param <T> T
+	 *
+	 * @since 2023-05-10
+	 */
 	public static <T> ResponseResult<T> success(T data, Object statusCode,Object message) {
 		ResponseResult<T> result = new ResponseResult<T>();
 		result.setData(data);
