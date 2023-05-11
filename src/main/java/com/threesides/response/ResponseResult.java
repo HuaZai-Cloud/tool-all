@@ -85,13 +85,42 @@ public class  ResponseResult<T> implements Serializable {
 		result.setMessage(message);
 		return result;
 	}
+
+	/**
+	 * 失败
+	 *
+	 * @return 失败信息
+	 * @param <T> T
+	 *
+	 * @since 2023-05-11
+	 */
 	public static <T> ResponseResult<T> fail() {
 		return fail(ResponseResultCodeEnum.SYSTEM_ERROR);
 	}
+
+	/**
+	 * 失败
+	 *
+	 * @param codeEnum codeEnum
+	 * @return 失败信息
+	 * @param <T> T
+	 *
+	 * @since 2023-05-11
+	 */
 	public static <T> ResponseResult<T> fail(BeanEnum codeEnum) {
 		return fail(null, codeEnum);
 	}
 
+	/**
+	 * 失败
+	 *
+	 * @param data data
+	 * @param codeEnum codeEnum
+	 * @return 失败信息
+	 * @param <T> T
+	 *
+	 * @since 2023-05-11
+	 */
 	public static <T> ResponseResult<T> fail(T data, BeanEnum codeEnum) {
 		return fail(data,codeEnum.getKey(),codeEnum.getValue());
 	}
