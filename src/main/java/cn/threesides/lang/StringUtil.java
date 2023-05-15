@@ -1,0 +1,713 @@
+package cn.threesides.lang;
+
+
+
+
+
+
+
+import cn.threesides.constant.text.CharTextConstant;
+import cn.threesides.constant.text.StringTextConstant;
+
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
+
+
+/**
+ * StringUtil
+ *
+ * @author Di Wu
+ * @since 2023-02-27
+ */
+public class StringUtil {
+
+	public static final int STRING_BUILDER_SIZE = 256;
+
+	//-----------------------------------------------------------------------
+
+	/**
+	 * 是否是空白
+	 * <p>例：</p>
+	 * <ul>
+	 *     <li>{@code StringUtil.isEmptyIfStr(null)     // true}</li>
+	 *     <li>{@code StringUtil.isEmptyIfStr("")       // true}</li>
+	 *     <li>{@code StringUtil.isEmptyIfStr(" ")      // true}</li>
+	 *     <li>{@code StringUtil.isEmptyIfStr("abc")    // false}</li>
+	 * </ul>
+	 *
+	 * @param cs cs
+	 * @return true:是 、false:不是
+	 *
+	 * @since 2023-04-08
+	 */
+	public static boolean isBlank(final CharSequence cs) {
+		final int strLen = length(cs);
+		if (strLen == 0) {
+			return true;
+		}
+		for (int i = 0; i < strLen; i++) {
+			if (!Character.isWhitespace(cs.charAt(i))) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * 是否是空
+	 * <p>例：</p>
+	 * <ul>
+	 *     <li>{@code StringUtil.isEmptyIfStr(null)     // true}</li>
+	 *     <li>{@code StringUtil.isEmptyIfStr("")       // true}</li>
+	 *     <li>{@code StringUtil.isEmptyIfStr(" ")      // false}</li>
+	 *     <li>{@code StringUtil.isEmptyIfStr("abc")    // false}</li>
+	 * </ul>
+	 *
+	 * @param cs cs
+	 * @return true:是 、false:不是
+	 *
+	 * @since 2023-04-08
+	 */
+	public static boolean isEmpty(final CharSequence cs) {
+		return cs == null || cs.length() == 0;
+	}
+
+	/**
+	 * 不是空白
+	 *
+	 * @param cs cs
+	 * @return true 不是空白 false 是空白
+	 *
+	 * @since 2023-04-26
+	 */
+	public static boolean isNotBlank(final CharSequence cs) {
+		return !isBlank(cs);
+	}
+
+	/**
+	 * 不是空
+	 *
+	 * @param cs cs
+	 * @return true 不是空 false 是空
+	 *
+	 * @since 2023-04-26
+	 */
+	public static boolean isNotEmpty(final CharSequence cs) {
+		return !isEmpty(cs);
+	}
+
+
+	/**
+	 * 是混合
+	 *
+	 * @param cs cs
+	 * @return true 是 false 不是
+	 *
+	 * @since 2023-04-26
+	 */
+	public static boolean isMixedCase(final CharSequence cs) {
+		if (isEmpty(cs) || cs.length() == 1) {
+			return false;
+		}
+		boolean containsUppercase = false;
+		boolean containsLowercase = false;
+		final int sz = cs.length();
+		for (int i = 0; i < sz; i++) {
+			if (containsUppercase && containsLowercase) {
+				return true;
+			} else if (Character.isUpperCase(cs.charAt(i))) {
+				containsUppercase = true;
+			} else if (Character.isLowerCase(cs.charAt(i))) {
+				containsLowercase = true;
+			}
+		}
+		return containsUppercase && containsLowercase;
+	}
+
+
+	/**
+	 * 纯数字
+	 *
+	 * @param cs cs
+	 * @return true 是 false 不是
+	 *
+	 * @since 2023-04-26
+	 */
+	public static boolean isPureNumeric(final CharSequence cs) {
+		if (isEmpty(cs)) {
+			return false;
+		}
+		final int sz = cs.length();
+		for (int i = 0; i < sz; i++) {
+			if (!Character.isDigit(cs.charAt(i))) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+
+	/**
+	 * 整数
+	 *
+	 * @param cs cs
+	 * @return true 是 false 不是
+	 *
+	 * @since 2023-04-26
+	 */
+	public static boolean isIntegerNumeric(final CharSequence cs) {
+		if (isEmpty(cs)) {
+			return false;
+		}
+		try {
+			Long.parseLong(cs.toString());
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
+
+
+	/**
+	 * 浮点数
+	 *
+	 * @param cs cs
+	 * @return true 是 false 不是
+	 *
+	 * @since 2023-04-26
+	 */
+	public static boolean isFloatingNumber(final CharSequence cs) {
+		if (isEmpty(cs)) {
+			return false;
+		}
+		try {
+			Double.parseDouble(cs.toString());
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
+
+	/**
+	 * 包含空格
+	 *
+	 * @param cs cs
+	 * @return true 是 false 不是
+	 *
+	 * @since 2023-04-26
+	 */
+	public static boolean containsWhitespace(final CharSequence cs) {
+		if (cs == null) {
+			return false;
+		}
+		final int sz = cs.length();
+		for (int i = 0; i < sz; i++) {
+			if (Character.isWhitespace(cs.charAt(i))) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+
+	/**
+	 * 空格
+	 *
+	 * @param cs cs
+	 * @return true 是 false 不是
+	 *
+	 * @since 2023-04-26
+	 */
+	public static boolean isWhitespace(final CharSequence cs) {
+		if (cs == null) {
+			return false;
+		}
+		final int sz = cs.length();
+		for (int i = 0; i < sz; i++) {
+			if (!Character.isWhitespace(cs.charAt(i))) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+
+	/**
+	 * 数组、集合转字符串
+	 *
+	 * @param obj
+	 * @param separator
+	 * @return
+	 *
+	 * @since 2023-04-27
+	 */
+	public static String join(final Object obj, final String separator) {
+		if (obj == null) {
+			return null;
+		}
+		return join( obj,separator,0, ObjectUtil.length(obj));
+	}
+
+	public static String join(final Object obj, final String separator, final int startIndex, final int endIndex) {
+		if (obj == null) {
+			return null;
+		}
+		if (obj instanceof long[]) {
+			return join((long[]) obj,separator,startIndex, endIndex);
+		} else if (obj instanceof int[]) {
+			return join((int[]) obj,separator,startIndex, endIndex);
+		} else if (obj instanceof short[]) {
+			return join((short[]) obj,separator,startIndex, endIndex);
+		} else if (obj instanceof char[]) {
+			return join((char[]) obj,separator,startIndex, endIndex);
+		} else if (obj instanceof byte[]) {
+			return join((byte[]) obj,separator,startIndex, endIndex);
+		} else if (obj instanceof boolean[]) {
+			return join((boolean[]) obj,separator,startIndex, endIndex);
+		} else if (obj instanceof float[]) {
+			return join((float[]) obj,separator,startIndex, endIndex);
+		} else if (obj instanceof double[]) {
+			return join((double[]) obj,separator,startIndex, endIndex);
+		} else if (ArrayUtil.isArray(obj)) {
+			return join((Object[]) obj, separator, startIndex, endIndex);
+		} else if (obj instanceof Collection) {
+			return join((Collection) obj, separator, startIndex, endIndex);
+		}
+		return join((Object[]) obj,separator,startIndex, endIndex);
+	}
+
+	/**
+	 * long数组转字符串
+	 *
+	 * @param array 数组
+	 * @param separator 分隔符
+	 * @param startIndex 开始下标
+	 * @param endIndex 结束下标
+	 * @return 字符串
+	 *
+	 * @since 2023-04-27
+	 */
+	public static String join(final long[] array, final String separator, final int startIndex, final int endIndex) {
+		if (array == null) {
+			return null;
+		}
+		final int noOfItems = endIndex - startIndex;
+		if (noOfItems <= 0) {
+			return StringTextConstant.EMPTY;
+		}
+		final StringBuilder buf = newStringBuilder(noOfItems);
+		buf.append(array[startIndex]);
+		for (int i = startIndex + 1; i < endIndex; i++) {
+			buf.append(separator);
+			buf.append(array[i]);
+		}
+		return buf.toString();
+	}
+
+	/**
+	 * int数组转字符串
+	 *
+	 * @param array 数组
+	 * @param separator 分隔符
+	 * @param startIndex 开始下标
+	 * @param endIndex 结束下标
+	 * @return 字符串
+	 *
+	 * @since 2023-04-27
+	 */
+	public static String join(final int[] array, final String separator, final int startIndex, final int endIndex) {
+		if (ArrayUtil.isEmpty(array)) {
+			return null;
+		}
+		final int noOfItems = endIndex - startIndex;
+		if (noOfItems <= 0) {
+			return StringTextConstant.EMPTY;
+		}
+		final StringBuilder buf = newStringBuilder(noOfItems);
+		buf.append(array[startIndex]);
+		for (int i = startIndex + 1; i < endIndex; i++) {
+			buf.append(separator);
+			buf.append(array[i]);
+		}
+		return buf.toString();
+	}
+
+	/**
+	 * short数组转字符串
+	 *
+	 * @param array 数组
+	 * @param separator 分隔符
+	 * @param startIndex 开始下标
+	 * @param endIndex 结束下标
+	 * @return 字符串
+	 *
+	 * @since 2023-04-27
+	 */
+	public static String join(final short[] array, final String separator, final int startIndex, final int endIndex) {
+		if (ArrayUtil.isEmpty(array)) {
+			return null;
+		}
+		final int noOfItems = endIndex - startIndex;
+		if (noOfItems <= 0) {
+			return StringTextConstant.EMPTY;
+		}
+		final StringBuilder buf = newStringBuilder(noOfItems);
+		buf.append(array[startIndex]);
+		for (int i = startIndex + 1; i < endIndex; i++) {
+			buf.append(separator);
+			buf.append(array[i]);
+		}
+		return buf.toString();
+	}
+
+	/**
+	 * char数组转字符串
+	 *
+	 * @param array 数组
+	 * @param separator 分隔符
+	 * @param startIndex 开始下标
+	 * @param endIndex 结束下标
+	 * @return 字符串
+	 *
+	 * @since 2023-04-27
+	 */
+	public static String join(final char[] array, final String separator, final int startIndex, final int endIndex) {
+		if (array == null) {
+			return null;
+		}
+		final int noOfItems = endIndex - startIndex;
+		if (noOfItems <= 0) {
+			return StringTextConstant.EMPTY;
+		}
+		final StringBuilder buf = newStringBuilder(noOfItems);
+		buf.append(array[startIndex]);
+		for (int i = startIndex + 1; i < endIndex; i++) {
+			buf.append(separator);
+			buf.append(array[i]);
+		}
+		return buf.toString();
+	}
+
+	/**
+	 *
+	 *
+	 * @param array
+	 * @param separator
+	 * @param startIndex
+	 * @param endIndex
+	 * @return
+	 *
+	 * @since 2023-04-27
+	 */
+	public static String join(final byte[] array, final String separator, final int startIndex, final int endIndex) {
+		if (array == null) {
+			return null;
+		}
+		final int noOfItems = endIndex - startIndex;
+		if (noOfItems <= 0) {
+			return StringTextConstant.EMPTY;
+		}
+		final StringBuilder buf = newStringBuilder(noOfItems);
+		buf.append(array[startIndex]);
+		for (int i = startIndex + 1; i < endIndex; i++) {
+			buf.append(separator);
+			buf.append(array[i]);
+		}
+		return buf.toString();
+	}
+
+
+
+	public static String join(final boolean[] array, final String separator, final int startIndex, final int endIndex) {
+
+		if (array == null) {
+			return null;
+		}
+		final int noOfItems = endIndex - startIndex;
+		if (noOfItems <= 0) {
+			return StringTextConstant.EMPTY;
+		}
+		final StringBuilder buf = newStringBuilder(noOfItems);
+		buf.append(array[startIndex]);
+		for (int i = startIndex + 1; i < endIndex; i++) {
+			buf.append(separator);
+			buf.append(array[i]);
+		}
+		return buf.toString();
+	}
+
+	public static String join(final float[] array, final String separator, final int startIndex, final int endIndex) {
+		if (array == null) {
+			return null;
+		}
+		final int noOfItems = endIndex - startIndex;
+		if (noOfItems <= 0) {
+			return StringTextConstant.EMPTY;
+		}
+		final StringBuilder buf = newStringBuilder(noOfItems);
+		buf.append(array[startIndex]);
+		for (int i = startIndex + 1; i < endIndex; i++) {
+			buf.append(separator);
+			buf.append(array[i]);
+		}
+		return buf.toString();
+	}
+
+	public static String join(final double[] array, final String separator, final int startIndex, final int endIndex) {
+		if (array == null) {
+			return null;
+		}
+		final int noOfItems = endIndex - startIndex;
+		if (noOfItems <= 0) {
+			return StringTextConstant.EMPTY;
+		}
+		final StringBuilder buf = newStringBuilder(noOfItems);
+		buf.append(array[startIndex]);
+		for (int i = startIndex + 1; i < endIndex; i++) {
+			buf.append(separator);
+			buf.append(array[i]);
+		}
+		return buf.toString();
+	}
+
+	public static String join(final Object[] array, final String separator, final int startIndex, final int endIndex) {
+		if (array == null) {
+			return null;
+		}
+		final int noOfItems = endIndex - startIndex;
+		if (noOfItems <= 0) {
+			return StringTextConstant.EMPTY;
+		}
+		final StringBuilder buf = newStringBuilder(noOfItems);
+		if (array[startIndex] != null) {
+			buf.append(array[startIndex]);
+		}
+		for (int i = startIndex + 1; i < endIndex; i++) {
+			buf.append(separator);
+			if (array[i] != null) {
+				buf.append(array[i]);
+			}
+		}
+		return buf.toString();
+	}
+
+
+	public static String join(final Collection<?> collection, final String separator, final int startIndex, final int endIndex) {
+		if (collection == null) {
+			return null;
+		}
+		final int noOfItems = endIndex - startIndex;
+		if (noOfItems <= 0) {
+			return StringTextConstant.EMPTY;
+		}
+		return join(collection.iterator(), separator);
+	}
+
+	private static String join(final Iterator<?> iterator, final String separator) {
+
+		if (iterator == null) {
+			return null;
+		}
+		if (!iterator.hasNext()) {
+			return StringTextConstant.EMPTY;
+		}
+		final Object first = iterator.next();
+		if (!iterator.hasNext()) {
+			return Objects.toString(first, StringTextConstant.EMPTY);
+		}
+
+
+		final StringBuilder buf = new StringBuilder(STRING_BUILDER_SIZE);
+		if (first != null) {
+			buf.append(first);
+		}
+
+		while (iterator.hasNext()) {
+			buf.append(separator);
+			final Object obj = iterator.next();
+			if (obj != null) {
+				buf.append(obj);
+			}
+		}
+
+		return buf.toString();
+	}
+
+
+	public static int length(final CharSequence cs) {
+		return cs == null ? 0 : cs.length();
+	}
+
+	private static StringBuilder newStringBuilder(final int noOfItems) {
+		return new StringBuilder(noOfItems * 16);
+	}
+
+	public static boolean startWithIgnoreEquals(CharSequence str, CharSequence prefix) {
+		return startWith(str, prefix, false, true);
+	}
+
+
+	public static boolean startWithIgnoreCase(CharSequence str, CharSequence prefix) {
+		return startWith(str, prefix, true);
+	}
+
+	public static boolean startWith(CharSequence str, CharSequence prefix, boolean ignoreCase) {
+		return startWith(str, prefix, ignoreCase, false);
+	}
+
+
+	public static boolean startWith(CharSequence str, CharSequence prefix, boolean ignoreCase, boolean ignoreEquals) {
+		if (null == str || null == prefix) {
+			if (ignoreEquals) {
+				return false;
+			}
+			return null == str && null == prefix;
+		}
+
+		boolean isStartWith = str.toString()
+				.regionMatches(ignoreCase, 0, prefix.toString(), 0, prefix.length());
+
+		if (isStartWith) {
+			return (!ignoreEquals) || (!equals(str, prefix, ignoreCase));
+		}
+		return false;
+	}
+
+	public static boolean equals(String obj1, String obj2) {
+		return equals(obj1, obj2, false);
+	}
+	public static boolean equals(CharSequence str1, CharSequence str2, boolean ignoreCase) {
+		if (null == str1) {
+			// 只有两个都为null才判断相等
+			return str2 == null;
+		}
+		if (null == str2) {
+			// 字符串2空，字符串1非空，直接false
+			return false;
+		}
+
+		if (ignoreCase) {
+			return str1.toString().equalsIgnoreCase(str2.toString());
+		} else {
+			return str1.toString().contentEquals(str2);
+		}
+	}
+
+	/**
+	 * 占位符替换
+	 *
+	 * <p>例：</p>
+	 * <ul>
+	 *     <li>{@code StringUtil.format("今天吃{},还是吃{}","面","饭")     // 今天吃面,还是吃饭"}</li>
+	 * </ul>
+	 * @param strPattern str
+	 * @param argArray 占位符内容替换
+	 * @return 占位符替换后Str
+	 *
+	 * @since 2023-04-26
+	 */
+	public static String format(final String strPattern, final Object... argArray) {
+		if (StringUtil.isBlank(strPattern) || ArrayUtil.isEmpty(argArray)) {
+			return strPattern;
+		}
+		final int strPatternLength = strPattern.length();
+
+		StringBuilder sbuf = new StringBuilder(strPatternLength + 50);
+
+		int handledPosition = 0;// 记录已经处理到的位置
+		int delimIndex;// 占位符所在位置
+		for (int argIndex = 0; argIndex < argArray.length; argIndex++) {
+			delimIndex = strPattern.indexOf(StringTextConstant.EMPTY_JSON, handledPosition);
+			if (delimIndex == -1) {// 剩余部分无占位符
+				if (handledPosition == 0) { // 不带占位符的模板直接返回
+					return strPattern;
+				}
+				// 字符串模板剩余部分不再包含占位符，加入剩余部分后返回结果
+				sbuf.append(strPattern, handledPosition, strPatternLength);
+				return sbuf.toString();
+			}
+
+			// 转义符
+			if (delimIndex > 0 && strPattern.charAt(delimIndex - 1) == CharTextConstant.BACKSLASH) {// 转义符
+				if (delimIndex > 1 && strPattern.charAt(delimIndex - 2) == CharTextConstant.BACKSLASH) {// 双转义符
+					// 转义符之前还有一个转义符，占位符依旧有效
+					sbuf.append(strPattern, handledPosition, delimIndex - 1);
+					sbuf.append(objectToUFTF8String(argArray[argIndex]));
+					handledPosition = delimIndex + 2;
+				} else {
+					// 占位符被转义
+					argIndex--;
+					sbuf.append(strPattern, handledPosition, delimIndex - 1);
+					sbuf.append(StringTextConstant.DELIM_START);
+					handledPosition = delimIndex + 1;
+				}
+			} else {// 正常占位符
+				sbuf.append(strPattern, handledPosition, delimIndex);
+				sbuf.append(objectToUFTF8String(argArray[argIndex]));
+				handledPosition = delimIndex + 2;
+			}
+		}
+
+		// append the characters following the last {} pair.
+		// 加入最后一个占位符后所有的字符
+		sbuf.append(strPattern, handledPosition, strPattern.length());
+
+		return sbuf.toString();
+	}
+
+	public static String objectToUFTF8String(Object obj) {
+		return objectToString(obj, StandardCharsets.UTF_8);
+	}
+	public static String objectToString(Object obj, Charset charset) {
+		if (null == obj) {
+			return null;
+		}
+		if (obj instanceof String) {
+			return (String) obj;
+		} else if (obj instanceof ByteBuffer) {
+			return objectToString((ByteBuffer) obj,charset);
+		} else if (ArrayUtil.isArray(obj)) {
+			return ArrayUtil.toString(obj);
+		}
+
+		return obj.toString();
+	}
+
+	public static String objectToString(ByteBuffer data, Charset charset) {
+		if (null == charset) {
+			charset = Charset.defaultCharset();
+		}
+		return charset.decode(data).toString();
+	}
+
+
+	/**
+	 * 字符串转集合
+	 *
+	 * @param data 数据
+	 * @param separator 分隔符
+	 * @return 集合
+	 *
+	 * @since 2023-04-28
+	 */
+	public static List<String> splitToList(final String data, final String separator) {
+		return Arrays.asList(splitToArray(data, separator));
+	}
+
+	/**
+	 * 字符串转数组
+	 *
+	 * @param data 字符串
+	 * @param separator 分隔符
+	 * @return 数组
+	 *
+	 * @since 2023-04-28
+	 */
+	public static String[] splitToArray(final String data, final String separator) {
+		return data.split(separator);
+	}
+
+
+}
